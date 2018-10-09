@@ -11,14 +11,14 @@ namespace Katale_Server_.Models
     {
         Engine.Departments departments = new Engine.Departments();
 
-        public int ID { get;}
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int DepartmentID { get; }
+        public int DepartmentID { get; set; }
         /// <summary>
         /// Returns the number of products within this category
         /// </summary>
-        public int Products{ get;}
+        public int Products{ get; set; }
 
         public Category()
         {

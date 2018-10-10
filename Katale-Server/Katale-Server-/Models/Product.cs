@@ -19,12 +19,28 @@ namespace Katale_Server_.Models
         private int ManufacturerID { get; set; }
 
         Engine.Categories categories = new Engine.Categories();
-
+        Engine.Manufacturers Manufacturers = new Engine.Manufacturers();
         ///<summary>
         ///Gets the manufacturer of this product
         /// </summary>
         public Manufacturer GetManufacturer()
         {
+            DataTable dt=Manufacturers.Get(ManufacturerID);
+
+            Manufacturer manufacturer = new Manufacturer
+            {
+                ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
+                Name = dt.Rows[0][1].ToString(),
+                Logo = dt.Rows[0][2].ToString(),
+                PrimaryAddress = dt.Rows[0][3].ToString(),
+                SecondaryAddress = dt.Rows[0][4].ToString(),
+                Email = dt.Rows[0][6].ToString(),
+                PhoneNumber = dt.Rows[0][7].ToString(),
+                WorkNumber = dt.Rows[0][8].ToString()
+
+            };
+
+            return manufacturer;
 
         }
 

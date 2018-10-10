@@ -9,7 +9,6 @@ namespace Katale_Server_.Models
 {
     public class Product
     {
-
         public int ID { get;}
         public string Name { get; set; }
         public string Description { get; set; }
@@ -17,6 +16,7 @@ namespace Katale_Server_.Models
         public bool PromoFront { get; set; }
         public bool InStock { get;}
         private int CategoryID { get; set; }
+        private int ManufacturerID { get; set; }
 
         Engine.Categories categories = new Engine.Categories();
 

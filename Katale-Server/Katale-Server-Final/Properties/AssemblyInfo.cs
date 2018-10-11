@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Katale_Server_")]
+[assembly: AssemblyTitle("Katale_Server_Final")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HP Inc.")]
-[assembly: AssemblyProduct("Katale_Server_")]
+[assembly: AssemblyProduct("Katale_Server_Final")]
 [assembly: AssemblyCopyright("Copyright © HP Inc. 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("06ecd7d7-3c32-492a-9a34-6833f884f195")]
+[assembly: Guid("2a307376-b0b3-41da-ae87-30ae111c59e4")]
 
 // Version information for an assembly consists of the following four values:
 //

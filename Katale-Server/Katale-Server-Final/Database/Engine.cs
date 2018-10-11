@@ -5,7 +5,7 @@ using System.Web;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data;
-
+using Katale_Server_.Models;
 
 namespace Katale_Server_.Database
 {
@@ -23,8 +23,11 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Selecting Departments from Database
             /// </summary>
-            public DataTable Get()
+            public List<Department> Get()
             {
+
+                List<Department> departments = new List<Department>();
+
                 DataTable dt = null;
                 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
@@ -44,20 +47,34 @@ namespace Katale_Server_.Database
 
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
+
+                        foreach(DataRow dataRow in dt.Rows)
+                        {
+                            Department department = new Department
+                            {
+                                ID = Convert.ToInt32(dataRow[0].ToString()),
+                                Name = dataRow[1].ToString(),
+                                Description = dataRow[2].ToString()
+                            };
+
+                            departments.Add(department);
+                        }
                         
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return departments;
             }
 
             /// <summary>
             /// Selecting Departments from Database where Name is .......
             /// </summary>
-            public DataTable Get(string Name)
+            public Department Get(string Name)
             {
+                Department department = new Department();
+
                 DataTable dt = null;
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
@@ -79,19 +96,26 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
+                        department.ID = Convert.ToInt32(dt.Rows[0][0].ToString());
+                        department.Name = dt.Rows[0][1].ToString();
+                        department.Description = dt.Rows[0][2].ToString();
+
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return department;
             }
 
             /// <summary>
             /// Selecting Departments from Database where ID is .......
             /// </summary>
-            public DataTable Get(int ID)
+            public Department Get(int ID)
             {
+
+                Department department = new Department();
+
                 DataTable dt = null;
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
@@ -113,12 +137,16 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
+                        department.ID = Convert.ToInt32(dt.Rows[0][0].ToString());
+                        department.Name = dt.Rows[0][1].ToString();
+                        department.Description = dt.Rows[0][2].ToString();
+
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return department;
             }
 
 
@@ -214,9 +242,10 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Selecting Categories from Database
             /// </summary>
-            public DataTable Get()
+            public List<Category> Get()
             {
                 DataTable dt = null;
+                List<Category> categories = new List<Category>();
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -236,20 +265,37 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
+                        foreach(DataRow dataRow in dt.Rows)
+                        {
+                            Category category = new Category
+                            {
+                                ID = Convert.ToInt32(dataRow[0].ToString()),
+                                Name = dataRow[1].ToString(),
+                                Description = dataRow[2].ToString(),
+                                DepartmentID = Convert.ToInt32(dataRow[3].ToString()),
+                                Products = Convert.ToInt32(dataRow[5])
+
+                            };
+
+                            categories.Add(category);
+                        }
+                        
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return categories;
             }
 
             /// <summary>
             /// Selecting categories from Database where Name is .......
             /// </summary>
-            public DataTable Get(string Name)
+            public Category Get(string Name)
             {
                 DataTable dt = null;
+
+                Category category = new Category();
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -270,20 +316,32 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
+                        category = new Category
+                        {
+                            ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
+                            Name = dt.Rows[0][1].ToString(),
+                            Description = dt.Rows[0][2].ToString(),
+                            DepartmentID = Convert.ToInt32(dt.Rows[0][3].ToString()),
+                            Products = Convert.ToInt32(dt.Rows[0][5])
+
+                        };
+
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return category;
             }
 
             /// <summary>
             /// Selecting categories from Database where ID is .......
             /// </summary>
-            public DataTable Get(int ID)
+            public Category Get(int ID)
             {
                 DataTable dt = null;
+
+                Category category = new Category();
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -304,12 +362,22 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
+                        category = new Category
+                        {
+                            ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
+                            Name = dt.Rows[0][1].ToString(),
+                            Description = dt.Rows[0][2].ToString(),
+                            DepartmentID = Convert.ToInt32(dt.Rows[0][3].ToString()),
+                            Products = Convert.ToInt32(dt.Rows[0][5])
+
+                        };
+
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return category;
             }
 
 
@@ -406,9 +474,11 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Selecting Products from Database
             /// </summary>
-            public DataTable Get()
+            public List<Product> Get()
             {
                 DataTable dt = null;
+
+                List<Product> products = new List<Product>();
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -428,20 +498,39 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
+                        foreach(DataRow dataRow in dt.Rows)
+                        {
+                            Product product = new Product
+                            {
+                                ID = Convert.ToInt32(dataRow[0].ToString()),
+                                Name = dataRow[1].ToString(),
+                                Description = dataRow[4].ToString(),
+                                PromoDept = Convert.ToBoolean(dataRow[2].ToString()),
+                                PromoFront = Convert.ToBoolean(dataRow[3].ToString()),
+                                InStock = Convert.ToBoolean(dataRow[8].ToString()),
+                                CategoryID = Convert.ToInt32(dataRow[6].ToString()),
+                                ManufacturerID = Convert.ToInt32(dataRow[5].ToString())
+                            };
+
+                            products.Add(product);
+                        }
+
+                      
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return products;
             }
 
             /// <summary>
             /// Selecting Product from Database where Name is .......
             /// </summary>
-            public DataTable Get(string Name)
+            public Product Get(string Name)
             {
                 DataTable dt = null;
+                Product product = new Product();
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -462,20 +551,36 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
+
+                        product = new Product
+                        {
+                            ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
+                            Name = dt.Rows[0][1].ToString(),
+                            Description = dt.Rows[0][4].ToString(),
+                            PromoDept = Convert.ToBoolean(dt.Rows[0][2].ToString()),
+                            PromoFront = Convert.ToBoolean(dt.Rows[0][3].ToString()),
+                            InStock = Convert.ToBoolean(dt.Rows[0][8].ToString()),
+                            CategoryID = Convert.ToInt32(dt.Rows[0][6].ToString()),
+                            ManufacturerID = Convert.ToInt32(dt.Rows[0][5].ToString())
+                        };
+
+
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return product;
             }
 
             /// <summary>
             /// Selecting product from Database where ID is .......
             /// </summary>
-            public DataTable Get(int ID)
+            public Product Get(int ID)
             {
                 DataTable dt = null;
+
+                Product product = new Product();
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -496,12 +601,24 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
+                        product = new Product
+                        {
+                            ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
+                            Name = dt.Rows[0][1].ToString(),
+                            Description = dt.Rows[0][4].ToString(),
+                            PromoDept = Convert.ToBoolean(dt.Rows[0][2].ToString()),
+                            PromoFront = Convert.ToBoolean(dt.Rows[0][3].ToString()),
+                            InStock = Convert.ToBoolean(dt.Rows[0][8].ToString()),
+                            CategoryID = Convert.ToInt32(dt.Rows[0][6].ToString()),
+                            ManufacturerID = Convert.ToInt32(dt.Rows[0][5].ToString())
+                        };
+
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return product;
             }
 
 
@@ -601,9 +718,11 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Selecting Manufacturers from Database
             /// </summary>
-            public DataTable Get()
+            public List<Manufacturer> Get()
             {
                 DataTable dt = null;
+
+                List<Manufacturer> manufacturers = new List<Manufacturer>();
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -623,12 +742,31 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
+
+                        foreach(DataRow dataRow in dt.Rows)
+                        {
+                            Manufacturer manufacturer = new Manufacturer
+                            {
+                                ID = Convert.ToInt32(dataRow[0].ToString()),
+                                Name = dataRow[1].ToString(),
+                                Email = dataRow[6].ToString(),
+                                Logo = dataRow[2].ToString(),
+                                PhoneNumber = dataRow[7].ToString(),
+                                PrimaryAddress = dataRow[3].ToString(),
+                                SecondaryAddress = dataRow[4].ToString(),
+                                WorkNumber = dataRow[8].ToString()
+                            };
+
+                            manufacturers.Add(manufacturer);
+                        }
+                       
+
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return manufacturers;
             }
 
             /// <summary>
@@ -668,9 +806,11 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Selecting Manufacturer from Database where ID is .......
             /// </summary>
-            public DataTable Get(int ID)
+            public Manufacturer Get(int ID)
             {
                 DataTable dt = null;
+
+                Manufacturer manufacturer = new Manufacturer();
 
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -690,13 +830,25 @@ namespace Katale_Server_.Database
 
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
+                        
+                        manufacturer = new Manufacturer
+                        {
+                            ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
+                            Name = dt.Rows[0][1].ToString(),
+                            Email = dt.Rows[0][6].ToString(),
+                            Logo = dt.Rows[0][2].ToString(),
+                            PhoneNumber = dt.Rows[0][7].ToString(),
+                            PrimaryAddress = dt.Rows[0][3].ToString(),
+                            SecondaryAddress = dt.Rows[0][4].ToString(),
+                            WorkNumber = dt.Rows[0][8].ToString()
+                        };
 
                     }
 
                     Con.Close();
                 }
 
-                return dt;
+                return manufacturer;
             }
 
 

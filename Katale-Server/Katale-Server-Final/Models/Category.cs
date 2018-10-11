@@ -32,17 +32,7 @@ namespace Katale_Server_.Models
         /// </summary>
         public Department GetDepartment()
         {
-            DataTable DepartmentTable=departments.Get(DepartmentID);
-
-            Department department = new Department
-            {
-                ID = Convert.ToInt32(DepartmentTable.Rows[0][0].ToString()),
-                Name = DepartmentTable.Rows[0][1].ToString(),
-                Description = DepartmentTable.Rows[0][2].ToString()
-
-            };
-
-            return department;
+            return departments.Get(DepartmentID);
         }
 
     }

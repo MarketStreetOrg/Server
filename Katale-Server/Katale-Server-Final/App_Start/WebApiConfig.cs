@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace Katale_Server_
+namespace Katale_Server_Final
 {
     public static class WebApiConfig
     {
@@ -16,7 +16,7 @@ namespace Katale_Server_
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{Action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

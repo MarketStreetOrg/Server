@@ -28,23 +28,8 @@ namespace Katale_Server_.Models
         ///</summary>
         public List<Category> GetCategories()
         {
-            List<Category> ls = new List<Category>();
-
-            foreach(DataRow dr in categories.Get().Rows)
-            {
-                Category category = new Category
-                {
-                    ID = Convert.ToInt32(dr[0].ToString()),
-                    Name = dr[1].ToString(),
-                    Description = dr[2].ToString(),
-                    DepartmentID = Convert.ToInt32(dr[3].ToString()),
-                    Products=Convert.ToInt32(dr[5].ToString())
-                };
-
-                ls.Add(category);
-            }
-
-            return ls;
+            
+            return categories.Get();
         }
 
 

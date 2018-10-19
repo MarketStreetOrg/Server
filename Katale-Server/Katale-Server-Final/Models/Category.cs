@@ -14,7 +14,7 @@ namespace Katale_Server_.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int DepartmentID { get; set; }
+        public Department Department { get; set; }
         /// <summary>
         /// Returns the number of products within this category
         /// </summary>
@@ -27,13 +27,13 @@ namespace Katale_Server_.Models
         }
            
         
-        ///<summary>
-        ///Get Department where this category stands
-        /// </summary>
-        public Department GetDepartment()
-        {
-            return departments.Get(DepartmentID);
-        }
+        /////<summary>
+        /////Get Department where this category stands
+        ///// </summary>
+        //public Department GetDepartment()
+        //{
+        //    return departments.Get(DepartmentID);
+        //}
 
     }
 }

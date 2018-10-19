@@ -21,7 +21,7 @@ namespace Katale_Server_.Models
         ///<summary>
         ///Returns the number of Categories in the department
         ///</summary>
-        private int Categories { get; set; }
+        public int Categories { get; set; }
 
         ///<summary>
         ///Gets Categories from this Department
@@ -29,7 +29,7 @@ namespace Katale_Server_.Models
         public List<Category> GetCategories()
         {
             
-            return categories.Get();
+            return categories.GetByDepartment(ID);
         }
 
 

@@ -17,6 +17,8 @@ namespace Katale_Server_.Database
         protected static SqlDataReader Reader;
         protected static string Query;
 
+        Categories categories = new Categories();
+
         public class Departments
         {
 
@@ -54,7 +56,9 @@ namespace Katale_Server_.Database
                             {
                                 ID = Convert.ToInt32(dataRow[0].ToString()),
                                 Name = dataRow[1].ToString(),
-                                Description = dataRow[2].ToString()
+                                Description = dataRow[2].ToString(),
+                                Categories=Convert.ToInt32(dataRow[3].ToString())
+                                
                             };
 
                             departments.Add(department);
@@ -183,12 +187,14 @@ namespace Katale_Server_.Database
             /// </summary>
             public void Edit(int DepartmentID,string Name,string Description)
             {
-                if (Con.State == ConnectionState.Closed)
-                {
-                    Con.Open();
-                }
+               
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
+                    if (Con.State == ConnectionState.Closed)
+                    {
+                        Con.Open();
+                    }
+
                     Query = "UpdateDepartment";
 
                     using (Com = new SqlCommand(Query, Con))
@@ -212,12 +218,14 @@ namespace Katale_Server_.Database
             /// </summary>
             public void Delete(int DepartmentID)
             {
-                if (Con.State == ConnectionState.Closed)
-                {
-                    Con.Open();
-                }
+               
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
+                    if (Con.State == ConnectionState.Closed)
+                    {
+                        Con.Open();
+                    }
+
                     Query = "DeleteDepartment";
 
                     using (Com = new SqlCommand(Query, Con))
@@ -272,7 +280,7 @@ namespace Katale_Server_.Database
                                 ID = Convert.ToInt32(dataRow[0].ToString()),
                                 Name = dataRow[1].ToString(),
                                 Description = dataRow[2].ToString(),
-                                DepartmentID = Convert.ToInt32(dataRow[3].ToString()),
+                                Department = new Departments().Get(Convert.ToInt32(dataRow[3].ToString())),
                                 Products = Convert.ToInt32(dataRow[5])
 
                             };
@@ -321,7 +329,7 @@ namespace Katale_Server_.Database
                             ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
                             Name = dt.Rows[0][1].ToString(),
                             Description = dt.Rows[0][2].ToString(),
-                            DepartmentID = Convert.ToInt32(dt.Rows[0][3].ToString()),
+                            Department = new Departments().Get(Convert.ToInt32(dt.Rows[0][3].ToString())),
                             Products = Convert.ToInt32(dt.Rows[0][5])
 
                         };
@@ -367,7 +375,7 @@ namespace Katale_Server_.Database
                             ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
                             Name = dt.Rows[0][1].ToString(),
                             Description = dt.Rows[0][2].ToString(),
-                            DepartmentID = Convert.ToInt32(dt.Rows[0][3].ToString()),
+                            Department = new Departments().Get(Convert.ToInt32(dt.Rows[0][3].ToString())),
                             Products = Convert.ToInt32(dt.Rows[0][5])
 
                         };
@@ -379,6 +387,58 @@ namespace Katale_Server_.Database
 
                 return category;
             }
+
+            /// <summary>
+            /// Selecting Categories from Database by DepartmentID
+            /// </summary>
+            public List<Category> GetByDepartment(int DepartmentID)
+            {
+                DataTable dt = null;
+                List<Category> categories = new List<Category>();
+
+                using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
+                {
+                    if (Con.State == ConnectionState.Closed)
+                    {
+                        Con.Open();
+                    }
+
+                    Query = "SelectCategoriesByDepartment";
+
+                    using (Com = new SqlCommand(Query, Con))
+                    {
+                        Com.CommandType = CommandType.StoredProcedure;
+
+                        Com.Parameters.Add(new SqlParameter("@DepartmentID", DepartmentID));
+
+                        DataAdapter = new SqlDataAdapter(Com);
+
+                        dt = new DataTable();
+                        DataAdapter.Fill(dt);
+
+                        foreach (DataRow dataRow in dt.Rows)
+                        {
+                            Category category = new Category
+                            {
+                                ID = Convert.ToInt32(dataRow[0].ToString()),
+                                Name = dataRow[1].ToString(),
+                                Description = dataRow[2].ToString(),
+                                Department = new Departments().Get(Convert.ToInt32(dataRow[3].ToString())),
+                                Products = Convert.ToInt32(dataRow[5])
+
+                            };
+
+                            categories.Add(category);
+                        }
+
+                    }
+
+                    Con.Close();
+                }
+
+                return categories;
+            }
+
 
 
             /// <summary>
@@ -500,19 +560,29 @@ namespace Katale_Server_.Database
 
                         foreach(DataRow dataRow in dt.Rows)
                         {
-                            Product product = new Product
+                            
+                                Product product = new Product
+                                {
+
+                                    ID = Convert.ToInt32(dataRow[0].ToString()),
+                                    Name = dataRow[1].ToString(),
+                                    Description = dataRow[4].ToString(),
+                                    PromoDept = Convert.ToBoolean(dataRow[2]),
+                                    PromoFront = Convert.ToBoolean(dataRow[3]),
+                                    InStock = Convert.ToBoolean(dataRow[8]),                                  
+                                    Category = new Categories().Get(Convert.ToInt32(dataRow[6].ToString())),
+
+                                   
+                                    
+                                };
+
+                            if (!dataRow[5].Equals(DBNull.Value))
                             {
-                                ID = Convert.ToInt32(dataRow[0].ToString()),
-                                Name = dataRow[1].ToString(),
-                                Description = dataRow[4].ToString(),
-                                PromoDept = Convert.ToBoolean(dataRow[2].ToString()),
-                                PromoFront = Convert.ToBoolean(dataRow[3].ToString()),
-                                InStock = Convert.ToBoolean(dataRow[8].ToString()),
-                                CategoryID = Convert.ToInt32(dataRow[6].ToString()),
-                                ManufacturerID = Convert.ToInt32(dataRow[5].ToString())
-                            };
+                                product.ManufacturerID = Convert.ToInt32(dataRow[5].ToString());
+                                    }
 
                             products.Add(product);
+                          
                         }
 
                       
@@ -550,20 +620,23 @@ namespace Katale_Server_.Database
 
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
-
-
+                        
                         product = new Product
                         {
                             ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
                             Name = dt.Rows[0][1].ToString(),
                             Description = dt.Rows[0][4].ToString(),
-                            PromoDept = Convert.ToBoolean(dt.Rows[0][2].ToString()),
-                            PromoFront = Convert.ToBoolean(dt.Rows[0][3].ToString()),
-                            InStock = Convert.ToBoolean(dt.Rows[0][8].ToString()),
-                            CategoryID = Convert.ToInt32(dt.Rows[0][6].ToString()),
-                            ManufacturerID = Convert.ToInt32(dt.Rows[0][5].ToString())
+                            PromoDept = Convert.ToBoolean(dt.Rows[0][2]),
+                            PromoFront = Convert.ToBoolean(dt.Rows[0][3]),
+                            InStock = Convert.ToBoolean(dt.Rows[0][8]),
+                            Category = new Categories().Get((dt.Rows[0][6].ToString()))
+                            
                         };
 
+                        if (!dt.Rows[0][5].Equals(DBNull.Value))
+                        {
+                            product.ManufacturerID = Convert.ToInt32(dt.Rows[0][5].ToString());
+                        }
 
                     }
 
@@ -606,13 +679,17 @@ namespace Katale_Server_.Database
                             ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
                             Name = dt.Rows[0][1].ToString(),
                             Description = dt.Rows[0][4].ToString(),
-                            PromoDept = Convert.ToBoolean(dt.Rows[0][2].ToString()),
-                            PromoFront = Convert.ToBoolean(dt.Rows[0][3].ToString()),
-                            InStock = Convert.ToBoolean(dt.Rows[0][8].ToString()),
-                            CategoryID = Convert.ToInt32(dt.Rows[0][6].ToString()),
-                            ManufacturerID = Convert.ToInt32(dt.Rows[0][5].ToString())
+                            PromoDept = Convert.ToBoolean(dt.Rows[0][2]),
+                            PromoFront = Convert.ToBoolean(dt.Rows[0][3]),
+                            InStock = Convert.ToBoolean(dt.Rows[0][8]),
+                            Category = new Categories().Get(Convert.ToInt32((dt.Rows[0][6].ToString()))),
+                        
                         };
 
+                        if (!dt.Rows[0][5].Equals(DBNull.Value))
+                        {
+                            product.ManufacturerID = Convert.ToInt32(dt.Rows[0][5].ToString());
+                        }
                     }
 
                     Con.Close();

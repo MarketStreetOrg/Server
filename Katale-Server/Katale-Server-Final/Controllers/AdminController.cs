@@ -84,6 +84,13 @@ namespace Katale_Server_.Controllers
             return categories.Get(id);
         }
 
+        [HttpPost]
+        public void AddCategory([FromBody]JObject Category)
+        {
+            JObject CategoryObject = Category;
+
+            categories.Add(Convert.ToInt32(CategoryObject["Departmentid"].ToString()),CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
+        }
         [HttpGet]
         public List<Product> Products()
         {

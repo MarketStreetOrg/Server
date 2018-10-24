@@ -444,7 +444,7 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Adding Category to Database
             /// </summary>
-            public void Add(int CategoryID,string Name, string Description)
+            public void Add(int DepartmentID,string Name, string Description)
             {
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -458,7 +458,7 @@ namespace Katale_Server_.Database
                     {
                         Com.CommandType = CommandType.StoredProcedure;
 
-                        Com.Parameters.Add(new SqlParameter("@Departmentid", CategoryID));
+                        Com.Parameters.Add(new SqlParameter("@Departmentid", DepartmentID));
                         Com.Parameters.Add(new SqlParameter("@Name", Name));
                         Com.Parameters.Add(new SqlParameter("@Description", Description));
 

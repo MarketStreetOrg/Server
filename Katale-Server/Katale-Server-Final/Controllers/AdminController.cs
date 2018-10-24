@@ -91,6 +91,23 @@ namespace Katale_Server_.Controllers
 
             categories.Add(Convert.ToInt32(CategoryObject["Departmentid"].ToString()),CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
         }
+
+        [HttpPut]
+        public void EditCategory([FromBody] JObject Category)
+        {
+            JObject CategoryObject = Category;
+
+            categories.Edit(Convert.ToInt32(CategoryObject["Categoryid"].ToString()), Convert.ToInt32(CategoryObject["Departmentid"].ToString()), CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
+        }
+        
+        [HttpDelete]
+        public void DeleteCategory(int CategoryID)
+        {
+            categories.Delete(CategoryID);
+        }
+        
+       
+        //Product functions
         [HttpGet]
         public List<Product> Products()
         {
@@ -101,6 +118,28 @@ namespace Katale_Server_.Controllers
         public Product Product(int id)
         {
             return products.Get(id);
+        }
+        
+        [HttpPost]
+        public void AddProduct([FromBody] JObject ProductObject)
+        {
+            ProductObject = new JObject();
+
+            products.Add(Convert.ToInt32(ProductObject["CategoryID"].ToString()), ProductObject["Name"].ToString(), ProductObject["Description"].ToString());
+        }
+
+        [HttpPut]
+        public void EditProduct([FromBody] JObject ProductObject)
+        {
+            ProductObject = new JObject();
+
+            products.Edit(Convert.ToInt32(ProductObject["CategoryID"].ToString()), Convert.ToInt32(ProductObject["ProductID"].ToString()), ProductObject["Name"].ToString(), ProductObject["Description"].ToString(),Convert.ToInt32(ProductObject["PromoFront"].ToString()), Convert.ToInt32(ProductObject["PromoDept"].ToString()));
+        }
+
+        [HttpDelete]
+        public void DeleteProduct(int ID)
+        {
+            products.Delete(ID);
         }
     }
 

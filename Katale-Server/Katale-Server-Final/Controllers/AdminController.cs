@@ -16,6 +16,7 @@ namespace Katale_Server_.Controllers
         Engine.Departments departments = new Engine.Departments();
         Engine.Categories categories = new Engine.Categories();
         Engine.Products products = new Engine.Products();
+        
 
         [HttpGet]
         public List<Department> Departments()
@@ -140,6 +141,13 @@ namespace Katale_Server_.Controllers
         public void DeleteProduct(int ID)
         {
             products.Delete(ID);
+        }
+
+        //Market Functions
+        [HttpGet]
+        public void Markets()
+        {
+            
         }
     }
 

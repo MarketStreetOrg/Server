@@ -6,6 +6,8 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data;
 using Katale_Server_.Models;
+using Katale_Server_Final.Models;
+using Katale_Server_Final.Side_Code;
 
 namespace Katale_Server_.Database
 {
@@ -1023,6 +1025,212 @@ namespace Katale_Server_.Database
                     Con.Close();
                 }
             }
+        }
+
+        public class Markets
+        {
+            /// <summary>
+            /// Adds Market to the Database
+            /// </summary>
+            public void Add(string Name,string Description,string Address1,string Address2,string Address3 = null)
+            {
+                using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
+                {
+                    if (Con.State == ConnectionState.Closed)
+                    {
+                        Con.Open();
+                    }
+                    Query = "AddMarket";
+
+                    using (Com = new SqlCommand(Query, Con))
+                    {
+                        Com.CommandType = CommandType.StoredProcedure;
+
+                        Com.Parameters.Add(new SqlParameter("@Name", Name));
+                        Com.Parameters.Add(new SqlParameter("@Description", Description));                
+                        Com.Parameters.Add(new SqlParameter("@Address1", Address1));
+                        Com.Parameters.Add(new SqlParameter("@Address2", Address2));
+                        Com.Parameters.Add(new SqlParameter("@Address2", Address3));
+
+                        Com.ExecuteNonQuery();
+
+                    }
+
+                    Con.Close();
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of markets from the Database
+            /// </summary>
+            public List<Market> Get()
+            {
+                List<Market> markets = new List<Market>();
+
+                DataTable dt = null;
+
+                using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
+                {
+                    if (Con.State == ConnectionState.Closed)
+                    {
+                        Con.Open();
+                    }
+
+                    Query = "SelectMarkets";
+
+                    using (Com = new SqlCommand(Query, Con))
+                    {
+                        Com.CommandType = CommandType.StoredProcedure;
+
+                        DataAdapter = new SqlDataAdapter(Com);
+
+                        dt = new DataTable();
+                        DataAdapter.Fill(dt);
+
+
+                        foreach (DataRow dataRow in dt.Rows)
+                        {
+                            Market market = new Market()
+                            {
+                                ID = Convert.ToInt32(dataRow[0].ToString()),
+                                Name = dataRow[1].ToString(),
+                                Description= dataRow[2].ToString(),
+                                
+                            };
+
+                            Address address = new Address()
+                            {
+                                Address1 = dataRow[3].ToString(),
+                                Address2 = dataRow[4].ToString(),
+                                Address3 = dataRow[5].ToString()
+                            };
+
+                            market.Address = address;
+
+                            markets.Add(market);
+                        }
+                        
+                    }
+
+                    Con.Close();
+                }
+                return markets;
+            }
+
+            /// <summary>
+            /// Gets market from the Database by ID
+            /// </summary>
+            public Market Get(int ID)
+            {
+                DataTable dt = null;
+
+                Market market = new Market();
+
+                using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
+                {
+                    if (Con.State == ConnectionState.Closed)
+                    {
+                        Con.Open();
+                    }
+                    Query = "SelectMarket";
+
+                    using (Com = new SqlCommand(Query, Con))
+                    {
+                        Com.CommandType = CommandType.StoredProcedure;
+
+                        Com.Parameters.Add(new SqlParameter("@ID", ID));
+
+                        DataAdapter = new SqlDataAdapter(Com);
+
+                        dt = new DataTable();
+                        DataAdapter.Fill(dt);
+
+                        market = new Market()
+                        {
+                            ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
+                            Name = dt.Rows[0][1].ToString(),
+                            Description = dt.Rows[0][2].ToString(),
+
+                        };
+
+                        Address address = new Address()
+                        {
+                            Address1 = dt.Rows[0][3].ToString(),
+                            Address2 = dt.Rows[0][4].ToString(),
+                            Address3 = dt.Rows[0][5].ToString()
+                        };
+
+                        market.Address = address;
+                    }
+
+                    Con.Close();
+                }
+
+                return market;
+            }
+
+            /// <summary>
+            /// Update market information in the database
+            /// </summary>
+            public void Edit(int MarketID,int AddressID,string Name, string Description, string Address1, string Address2, string Address3 = null)
+            {
+                if (Con.State == ConnectionState.Closed)
+                {
+                    Con.Open();
+                }
+                using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
+                {
+                    Query = "UpdateMarket";
+
+                    using (Com = new SqlCommand(Query, Con))
+                    {
+                        Com.CommandType = CommandType.StoredProcedure;
+
+                        Com.Parameters.Add(new SqlParameter("@MarketID", MarketID));
+                        Com.Parameters.Add(new SqlParameter("@AddressID", AddressID));
+                        Com.Parameters.Add(new SqlParameter("@Name", Name));
+                        Com.Parameters.Add(new SqlParameter("@Description", Description));                             
+                        Com.Parameters.Add(new SqlParameter("@Address1", Address1));
+                        Com.Parameters.Add(new SqlParameter("@Address2", Address2));
+                        Com.Parameters.Add(new SqlParameter("@Address3", Address3));
+
+                        Com.ExecuteNonQuery();
+
+                        Com.Dispose();
+                    }
+
+                    Con.Close();
+                }
+            }
+
+            /// <summary>
+            /// Delete Market from database
+            /// </summary>
+            /// <param name="MarketID"></param>
+            public void Delete(int MarketID)
+            {
+                if (Con.State == ConnectionState.Closed)
+                {
+                    Con.Open();
+                }
+                using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
+                {
+                    Query = "DeleteMarket";
+
+                    using (Com = new SqlCommand(Query, Con))
+                    {
+                        Com.CommandType = CommandType.StoredProcedure;
+
+                        Com.Parameters.Add(new SqlParameter("@MarketID",MarketID));
+                        
+                        Com.ExecuteNonQuery();
+
+                    }
+
+                    Con.Close();
+                }
+            }
+
         }
 
     }

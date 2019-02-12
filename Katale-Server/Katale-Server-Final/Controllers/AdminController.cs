@@ -39,7 +39,7 @@ namespace Katale_Server_.Controllers
         }
 
         [HttpPut]
-        [Route("departments/{id}/edit")]
+        [Route("department/{id}/edit")]
         public bool EditDepartment([FromBody]JObject Department,string id)
         {
             try
@@ -66,7 +66,7 @@ namespace Katale_Server_.Controllers
 
         
         [HttpGet]
-        [Route("departments/{id}/categories")]
+        [Route("department/{id}/categories")]
         public List<Category> DepartmentCategories([FromUri]int id)
         {
             return categories.GetByDepartment(id);

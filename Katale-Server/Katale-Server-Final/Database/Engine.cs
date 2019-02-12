@@ -477,12 +477,13 @@ namespace Katale_Server_.Database
             /// </summary>
             public void Edit(int CategoryID,int DepartmentID, string Name, string Description)
             {
-                if (Con.State == ConnectionState.Closed)
-                {
-                    Con.Open();
-                }
+              
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
+                    if (Con.State == ConnectionState.Closed)
+                    {
+                        Con.Open();
+                    }
                     Query = "UpdateCategory";
 
                     using (Com = new SqlCommand(Query, Con))

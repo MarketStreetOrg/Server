@@ -214,6 +214,10 @@ UpgradeLog*.htm
 *.mdf
 *.ldf
 
+#Configurationfile
+/*Web.config
+
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout
@@ -240,6 +244,7 @@ FakesAssemblies/
 **/*.DesktopClient/ModelManifest.xml
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
+
 _Pvt_Extensions
 
 # Paket dependency manager

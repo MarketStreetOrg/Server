@@ -3,21 +3,18 @@ using Katale_Server_.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Katale_Server_.Controllers
 {
+    [RoutePrefix("api/admin")]
     public class AdminController : ApiController
     {
         Engine.Departments departments = new Engine.Departments();
         Engine.Categories categories = new Engine.Categories();
         Engine.Products products = new Engine.Products();
         
-
+       
         [HttpGet]
         public List<Department> Departments()
         {
@@ -42,13 +39,14 @@ namespace Katale_Server_.Controllers
         }
 
         [HttpPut]
-        public bool EditDepartment([FromBody]JObject Department)
+        [Route("departments/{id}/edit")]
+        public bool EditDepartment([FromBody]JObject Department,string id)
         {
             try
             {
                 JObject DepartmentObject = Department;
 
-                departments.Edit(Convert.ToInt32(DepartmentObject["ID"].ToString()), DepartmentObject["Name"].ToString(), DepartmentObject["Description"].ToString());
+                departments.Edit(Convert.ToInt32(id), DepartmentObject["Name"].ToString(), DepartmentObject["Description"].ToString());
 
                 return true;
             }
@@ -66,9 +64,10 @@ namespace Katale_Server_.Controllers
             return true;
         }
 
-        [ActionName("Categories-dept")]
+        
         [HttpGet]
-        public List<Category> DepartmentCategories(int id)
+        [Route("departments/{id}/categories")]
+        public List<Category> DepartmentCategories([FromUri]int id)
         {
             return categories.GetByDepartment(id);
         }
@@ -93,18 +92,21 @@ namespace Katale_Server_.Controllers
             categories.Add(Convert.ToInt32(CategoryObject["Departmentid"].ToString()),CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
         }
 
-        [HttpPut, ActionName("category")]
-        public void EditCategory([FromBody] JObject Category,[FromUri]String edit)
+       
+        [HttpPut]
+        [Route("categories/{id}/edit")]
+        public void EditCategory([FromBody] JObject Category,[FromUri]String id)
         {
             JObject CategoryObject = Category;
-
-            categories.Edit(Convert.ToInt32(CategoryObject["Categoryid"].ToString()), Convert.ToInt32(CategoryObject["Departmentid"].ToString()), CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
+           
+            categories.Edit(Convert.ToInt32(id), Convert.ToInt32(CategoryObject["Departmentid"].ToString()), CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
         }
         
         [HttpDelete]
-        public void DeleteCategory(int CategoryID)
+        [Route("categories/{id}/delete")]
+        public void DeleteCategory(int id)
         {
-            categories.Delete(CategoryID);
+            categories.Delete(id);
         }
         
        
@@ -130,14 +132,16 @@ namespace Katale_Server_.Controllers
         }
 
         [HttpPut]
-        public void EditProduct([FromBody] JObject ProductObject)
+        [Route("products/{id}/edit")]
+        public void EditProduct([FromBody] JObject ProductObject,string id)
         {
             ProductObject = new JObject();
-
-            products.Edit(Convert.ToInt32(ProductObject["CategoryID"].ToString()), Convert.ToInt32(ProductObject["ProductID"].ToString()), ProductObject["Name"].ToString(), ProductObject["Description"].ToString(),Convert.ToInt32(ProductObject["PromoFront"].ToString()), Convert.ToInt32(ProductObject["PromoDept"].ToString()));
+            
+            products.Edit(Convert.ToInt32(id), Convert.ToInt32(ProductObject["ProductID"].ToString()), ProductObject["Name"].ToString(), ProductObject["Description"].ToString(),Convert.ToInt32(ProductObject["PromoFront"].ToString()), Convert.ToInt32(ProductObject["PromoDept"].ToString()));
         }
 
         [HttpDelete]
+        [Route("products/{id}/delete")]
         public void DeleteProduct(int ID)
         {
             products.Delete(ID);

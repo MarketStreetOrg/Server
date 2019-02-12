@@ -93,9 +93,8 @@ namespace Katale_Server_.Controllers
             categories.Add(Convert.ToInt32(CategoryObject["Departmentid"].ToString()),CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
         }
 
-        [HttpPut,ActionName("editcat")]
-
-        public void EditCategory([FromBody] JObject Category)
+        [HttpPut, ActionName("category")]
+        public void EditCategory([FromBody] JObject Category,[FromUri]String edit)
         {
             JObject CategoryObject = Category;
 

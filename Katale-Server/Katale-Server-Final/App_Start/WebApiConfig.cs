@@ -19,6 +19,14 @@ namespace Katale_Server_Final
                 routeTemplate: "api/{controller}/{Action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+            name: "ApiByName",
+            routeTemplate: "api/{controller}/{action}/{name}",
+            defaults: null,
+            constraints: new { name = @"^[a-z]+$" }
+        );
+
         }
     }
 }

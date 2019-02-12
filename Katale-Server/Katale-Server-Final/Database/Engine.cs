@@ -476,8 +476,7 @@ namespace Katale_Server_.Database
             /// Editing Category in Database
             /// </summary>
             public void Edit(int CategoryID,int DepartmentID, string Name, string Description)
-            {
-              
+            {  
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
                     if (Con.State == ConnectionState.Closed)

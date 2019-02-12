@@ -94,6 +94,7 @@ namespace Katale_Server_.Controllers
         }
 
         [HttpPut,ActionName("editcat")]
+
         public void EditCategory([FromBody] JObject Category)
         {
             JObject CategoryObject = Category;

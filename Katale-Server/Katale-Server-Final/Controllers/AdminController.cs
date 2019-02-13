@@ -31,6 +31,7 @@ namespace Katale_Server_.Controllers
 
    
         [HttpPost]
+        [Route("departments/add")]
         public void AddDepartment([FromBody]JObject Department)
         {
             JObject DepartmentObject = Department;
@@ -86,6 +87,7 @@ namespace Katale_Server_.Controllers
         }
 
         [HttpPost]
+        [Route("categories/add")]
         public void AddCategory([FromBody]JObject Category)
         {
             JObject CategoryObject = Category;
@@ -125,6 +127,7 @@ namespace Katale_Server_.Controllers
         }
         
         [HttpPost]
+        [Route("products/add")]
         public void AddProduct([FromBody] JObject ProductObject)
         {
             ProductObject = new JObject();

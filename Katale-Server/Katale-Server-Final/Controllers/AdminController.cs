@@ -60,7 +60,7 @@ namespace Katale_Server_.Controllers
         public bool DeleteDepartment([FromUri]int ID)
         {
             departments.Delete(ID);
-
+            
             return true;
         }
 
@@ -73,6 +73,7 @@ namespace Katale_Server_.Controllers
         }
 
         [HttpGet]
+        //[Route("categories")]
         public List<Category> Categories()
         {
             return categories.Get();

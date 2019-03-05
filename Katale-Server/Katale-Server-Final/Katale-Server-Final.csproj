@@ -116,8 +116,16 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Database\Generic\IGenericDAO.cs" />
+    <Compile Include="Database\Service\IDepartmentService.cs" />
+    <Compile Include="Database\Service\IService.cs" />
+    <Compile Include="Database\SQL\DepartmentSqlDAO.cs" />
+    <Compile Include="Database\SQL\IsqlDAO.cs" />
+    <Compile Include="Database\Mongo\MongoDAO.cs" />
+    <Compile Include="Database\Service\DepartmentService.cs" />
     <Compile Include="Database\Engine.cs" />
     <Compile Include="Database\GlobalConfigurations.cs" />
+    <Compile Include="Database\SQL\SqlDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -129,6 +137,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Side Code\Address.cs" />
     <Compile Include="Side Code\ImageProcessor.cs" />
+    <Compile Include="Utilities\Column.cs" />
+    <Compile Include="Utilities\Entity.cs" />
+    <Compile Include="Utilities\Transient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

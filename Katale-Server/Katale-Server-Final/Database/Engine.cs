@@ -8,6 +8,7 @@ using System.Data;
 using Katale_Server_.Models;
 using Katale_Server_Final.Models;
 using Katale_Server_Final.Side_Code;
+using System.IO;
 
 namespace Katale_Server_.Database
 {
@@ -23,10 +24,18 @@ namespace Katale_Server_.Database
 
         public class Departments
         {
-
             /// <summary>
             /// Selecting Departments from Database
             /// </summary>
+            /// 
+
+            List<Department> departments = new List<Department>();
+
+            string GetDepartments()
+            {
+                return departments.Select(x=>x).Where(x => x.Name == "").Select(x=>x.Name).Aggregate((a,b)=>a+b);
+            }
+
             public List<Department> Get()
             {
 
@@ -154,7 +163,6 @@ namespace Katale_Server_.Database
 
                 return department;
             }
-
 
             /// <summary>
             /// Adding Department to Database
@@ -904,7 +912,7 @@ namespace Katale_Server_.Database
                         Com.CommandType = CommandType.StoredProcedure;
 
                         Com.Parameters.Add(new SqlParameter("@ManufacturerID", ID));
-
+                        
                         DataAdapter = new SqlDataAdapter(Com);
 
                         dt = new DataTable();

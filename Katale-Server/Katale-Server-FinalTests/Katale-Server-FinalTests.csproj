@@ -57,6 +57,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Database\CategoriesTests.cs" />
+    <Compile Include="Database\DomainTest.cs" />
+    <Compile Include="Database\ServiceTest.cs" />
+    <Compile Include="Database\Service\DepartmentServiceTests.cs" />
+    <Compile Include="Database\SqlDAOTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -180,7 +180,6 @@
     <Compile Include="Utilities\Transient.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Connected Services\Key Vault\ConnectedService.json" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

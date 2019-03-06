@@ -24,7 +24,7 @@ namespace Katale_Server_Final.Database.Cloud
 
         public void LoadConfigurations()
         {
-            LoadCloudConnections().Wait();
+            LoadCloudConnections().Wait(5000);
         }
 
         private async Task LoadCloudConnections()

@@ -30,11 +30,7 @@ namespace Katale_Server_.Database
             /// Selecting Departments from Database
             /// </summary>
             /// 
-
-            //public Departments()
-            //{
-            //    GlobalConfigurations.Configuration = new AzureCloudConfig();
-            //}
+            
 
             List<Department> departments = new List<Department>();
 

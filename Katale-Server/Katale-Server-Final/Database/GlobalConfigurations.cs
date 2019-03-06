@@ -27,8 +27,7 @@ namespace Katale_Server_.Database
         {
             get
             {
-
-                return ConfigurationManager.ConnectionStrings["azurekataledatabase"].ToString();
+                return ConfigurationManager.ConnectionStrings["kataledatabase"].ToString();
             }
         }
     }

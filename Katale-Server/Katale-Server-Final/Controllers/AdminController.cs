@@ -1,5 +1,8 @@
 ﻿using Katale_Server_.Database;
 using Katale_Server_.Models;
+using Katale_Server_Final.Database;
+using Katale_Server_Final.Database.Service;
+using Katale_Server_Final.Database.SQL;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,7 +16,7 @@ namespace Katale_Server_.Controllers
         Engine.Departments departments = new Engine.Departments();
         Engine.Categories categories = new Engine.Categories();
         Engine.Products products = new Engine.Products();
-        
+       // DepartmentService departmentService = new DepartmentService(new DepartmentSqlDAO());
        
         [HttpGet]
         public List<Department> Departments()

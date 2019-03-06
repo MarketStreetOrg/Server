@@ -16,7 +16,7 @@ namespace Katale_Server_.Controllers
         Engine.Departments departments = new Engine.Departments();
         Engine.Categories categories = new Engine.Categories();
         Engine.Products products = new Engine.Products();
-        DepartmentService departmentService = new DepartmentService(new DepartmentSqlDAO());
+       // DepartmentService departmentService = new DepartmentService(new DepartmentSqlDAO());
        
         [HttpGet]
         public List<Department> Departments()

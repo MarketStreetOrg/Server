@@ -42,13 +42,8 @@ namespace Katale_Server_Final.Database.SQL
 
             DataTable dt = null;
 
-            using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
-            {
-                if (Con.State == ConnectionState.Closed)
-                {
-                    Con.Open();
-                }
-
+            Con=this.CreateConnection();
+            
                 Query = "SelectDepartments";
 
                 using (Com = new SqlCommand(Query, Con))
@@ -74,7 +69,7 @@ namespace Katale_Server_Final.Database.SQL
                         departments.Add(department);
                     }
 
-                }
+                
 
                 Con.Close();
             }

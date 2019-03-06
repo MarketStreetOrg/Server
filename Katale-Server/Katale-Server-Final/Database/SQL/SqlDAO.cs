@@ -1,5 +1,6 @@
 ﻿using Katale_Server_.Database;
 using Katale_Server_.Models;
+using Katale_Server_Final.Database.Cloud;
 using Katale_Server_Final.Utilities;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,11 @@ namespace Katale_Server_Final.Database
         protected static SqlDataAdapter DataAdapter;
         protected static SqlDataReader Reader;
         protected string Query;
+
+        public SqlDAO()
+        {
+            GlobalConfigurations.Configuration = new AzureCloudConfig();
+        }
 
     //    //Get Model Entity Attribute
     //    System.Reflection.MemberInfo memberInfo = typeof(T);
@@ -261,18 +267,19 @@ namespace Katale_Server_Final.Database
             return Con.State == ConnectionState.Open;
         }
 
+       
         protected SqlConnection CreateConnection()
         {
-            Con = new SqlConnection(GlobalConfigurations.ConnectionString);
+          
+            Con = new SqlConnection(GlobalConfigurations.CloudConnectionString);
             
-            if (Connected())
-            {
-                Con.Close();
-            }
-
-            Con.Open();
-
-
+                if (Connected())
+                {
+                    Con.Close();
+                }
+                
+                 Con.Open();
+            
             return Con;
         }
 
@@ -297,7 +304,7 @@ namespace Katale_Server_Final.Database
         //        if (property.GetCustomAttributes().Any(a => a.GetType().Equals(typeof(Column))))
         //        {
         //            column = property.GetCustomAttributes<Column>().Select(a => a).First();
-                    
+
         //        }
 
         //        SelectedProperties.Add(property,column);

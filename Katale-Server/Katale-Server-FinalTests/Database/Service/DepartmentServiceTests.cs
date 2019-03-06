@@ -19,8 +19,9 @@ namespace Katale_Server_Final.Database.Tests
         [TestMethod()]
         public void TestGetAllDepartments()
         {
-
+            List<Department> departments = departmentService.GetAll();
             Assert.IsNotNull(departmentService.GetAll());
+         
         }
 
         [TestMethod()]

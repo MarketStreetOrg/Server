@@ -16,6 +16,11 @@ namespace Katale_Server_Final.Database
             this.DataAccessObject = DataAccessObject;
         }
 
+        public DepartmentService()
+        {
+
+        }
+
         ///<summary>
         ///Gets a single department from the DB using id
         ///

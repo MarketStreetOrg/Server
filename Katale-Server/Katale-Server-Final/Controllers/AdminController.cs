@@ -18,7 +18,7 @@ namespace Katale_Server_.Controllers
         [HttpGet]
         public List<Department> Departments()
         {
-
+        
             return departments.Get();
 
         }

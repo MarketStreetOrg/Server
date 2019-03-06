@@ -9,11 +9,12 @@ using Katale_Server_.Models;
 using Katale_Server_Final.Models;
 using Katale_Server_Final.Side_Code;
 using System.IO;
+using Katale_Server_Final.Database.Cloud;
 
 namespace Katale_Server_.Database
 {
     public class Engine
-    { 
+    {
         protected static SqlConnection Con;
         protected static SqlCommand Com;
         protected static SqlDataAdapter DataAdapter;
@@ -22,6 +23,7 @@ namespace Katale_Server_.Database
 
         Categories categories = new Categories();
 
+       
         public class Departments
         {
             /// <summary>
@@ -29,11 +31,16 @@ namespace Katale_Server_.Database
             /// </summary>
             /// 
 
+            //public Departments()
+            //{
+            //    GlobalConfigurations.Configuration = new AzureCloudConfig();
+            //}
+
             List<Department> departments = new List<Department>();
 
             string GetDepartments()
             {
-                return departments.Select(x=>x).Where(x => x.Name == "").Select(x=>x.Name).Aggregate((a,b)=>a+b);
+                return departments.Select(x => x).Where(x => x.Name == "").Select(x => x.Name).Aggregate((a, b) => a + b);
             }
 
             public List<Department> Get()
@@ -42,7 +49,7 @@ namespace Katale_Server_.Database
                 List<Department> departments = new List<Department>();
 
                 DataTable dt = null;
-                
+
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
                     if (Con.State == ConnectionState.Closed)
@@ -61,20 +68,20 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
-                        foreach(DataRow dataRow in dt.Rows)
+                        foreach (DataRow dataRow in dt.Rows)
                         {
                             Department department = new Department
                             {
                                 ID = Convert.ToInt32(dataRow[0].ToString()),
                                 Name = dataRow[1].ToString(),
                                 Description = dataRow[2].ToString(),
-                                Categories=Convert.ToInt32(dataRow[3].ToString())
-                                
+                                Categories = Convert.ToInt32(dataRow[3].ToString())
+
                             };
 
                             departments.Add(department);
                         }
-                        
+
                     }
 
                     Con.Close();
@@ -167,9 +174,9 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Adding Department to Database
             /// </summary>
-            public void Add(string Name,string Description)
+            public void Add(string Name, string Description)
             {
-                using (Con=new SqlConnection(GlobalConfigurations.ConnectionString))
+                using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
                     if (Con.State == ConnectionState.Closed)
                     {
@@ -177,7 +184,7 @@ namespace Katale_Server_.Database
                     }
                     Query = "AddDepartment";
 
-                    using (Com=new SqlCommand(Query, Con))
+                    using (Com = new SqlCommand(Query, Con))
                     {
                         Com.CommandType = CommandType.StoredProcedure;
 
@@ -195,9 +202,9 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Editing Department in Database
             /// </summary>
-            public void Edit(int DepartmentID,string Name,string Description)
+            public void Edit(int DepartmentID, string Name, string Description)
             {
-               
+
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
                     if (Con.State == ConnectionState.Closed)
@@ -228,7 +235,7 @@ namespace Katale_Server_.Database
             /// </summary>
             public void Delete(int DepartmentID)
             {
-               
+
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
                     if (Con.State == ConnectionState.Closed)
@@ -243,7 +250,7 @@ namespace Katale_Server_.Database
                         Com.CommandType = CommandType.StoredProcedure;
 
                         Com.Parameters.Add(new SqlParameter("@id", DepartmentID));
-                     
+
 
                         Com.ExecuteNonQuery();
 
@@ -283,7 +290,7 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
-                        foreach(DataRow dataRow in dt.Rows)
+                        foreach (DataRow dataRow in dt.Rows)
                         {
                             Category category = new Category
                             {
@@ -297,7 +304,7 @@ namespace Katale_Server_.Database
 
                             categories.Add(category);
                         }
-                        
+
                     }
 
                     Con.Close();
@@ -454,7 +461,7 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Adding Category to Database
             /// </summary>
-            public void Add(int DepartmentID,string Name, string Description)
+            public void Add(int DepartmentID, string Name, string Description)
             {
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -483,8 +490,8 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Editing Category in Database
             /// </summary>
-            public void Edit(int CategoryID,int DepartmentID, string Name, string Description)
-            {  
+            public void Edit(int CategoryID, int DepartmentID, string Name, string Description)
+            {
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
                     if (Con.State == ConnectionState.Closed)
@@ -539,7 +546,7 @@ namespace Katale_Server_.Database
             }
         }
 
-       public class Products
+        public class Products
         {
             /// <summary>
             /// Selecting Products from Database
@@ -568,34 +575,34 @@ namespace Katale_Server_.Database
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
 
-                        foreach(DataRow dataRow in dt.Rows)
+                        foreach (DataRow dataRow in dt.Rows)
                         {
-                            
-                                Product product = new Product
-                                {
 
-                                    ID = Convert.ToInt32(dataRow[0].ToString()),
-                                    Name = dataRow[1].ToString(),
-                                    Description = dataRow[4].ToString(),
-                                    PromoDept = Convert.ToBoolean(dataRow[2]),
-                                    PromoFront = Convert.ToBoolean(dataRow[3]),
-                                    InStock = Convert.ToBoolean(dataRow[8]),                                  
-                                    Category = new Categories().Get(Convert.ToInt32(dataRow[6].ToString())),
+                            Product product = new Product
+                            {
 
-                                   
-                                    
-                                };
+                                ID = Convert.ToInt32(dataRow[0].ToString()),
+                                Name = dataRow[1].ToString(),
+                                Description = dataRow[4].ToString(),
+                                PromoDept = Convert.ToBoolean(dataRow[2]),
+                                PromoFront = Convert.ToBoolean(dataRow[3]),
+                                InStock = Convert.ToBoolean(dataRow[8]),
+                                Category = new Categories().Get(Convert.ToInt32(dataRow[6].ToString())),
+
+
+
+                            };
 
                             if (!dataRow[5].Equals(DBNull.Value))
                             {
                                 product.ManufacturerID = Convert.ToInt32(dataRow[5].ToString());
-                                    }
+                            }
 
                             products.Add(product);
-                          
+
                         }
 
-                      
+
                     }
 
                     Con.Close();
@@ -630,7 +637,7 @@ namespace Katale_Server_.Database
 
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
-                        
+
                         product = new Product
                         {
                             ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
@@ -640,7 +647,7 @@ namespace Katale_Server_.Database
                             PromoFront = Convert.ToBoolean(dt.Rows[0][3]),
                             InStock = Convert.ToBoolean(dt.Rows[0][8]),
                             Category = new Categories().Get((dt.Rows[0][6].ToString()))
-                            
+
                         };
 
                         if (!dt.Rows[0][5].Equals(DBNull.Value))
@@ -693,7 +700,7 @@ namespace Katale_Server_.Database
                             PromoFront = Convert.ToBoolean(dt.Rows[0][3]),
                             InStock = Convert.ToBoolean(dt.Rows[0][8]),
                             Category = new Categories().Get(Convert.ToInt32((dt.Rows[0][6].ToString()))),
-                        
+
                         };
 
                         if (!dt.Rows[0][5].Equals(DBNull.Value))
@@ -741,7 +748,7 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Editing product in Database
             /// </summary>
-            public void Edit(int CategoryID, int ProductID, string Name, string Description,int PromoFront,int PromoDept)
+            public void Edit(int CategoryID, int ProductID, string Name, string Description, int PromoFront, int PromoDept)
             {
                 if (Con.State == ConnectionState.Closed)
                 {
@@ -797,7 +804,7 @@ namespace Katale_Server_.Database
                     Con.Close();
                 }
             }
-        
+
         }
 
         public class Manufacturers
@@ -830,7 +837,7 @@ namespace Katale_Server_.Database
                         DataAdapter.Fill(dt);
 
 
-                        foreach(DataRow dataRow in dt.Rows)
+                        foreach (DataRow dataRow in dt.Rows)
                         {
                             Manufacturer manufacturer = new Manufacturer
                             {
@@ -846,7 +853,7 @@ namespace Katale_Server_.Database
 
                             manufacturers.Add(manufacturer);
                         }
-                       
+
 
                     }
 
@@ -912,12 +919,12 @@ namespace Katale_Server_.Database
                         Com.CommandType = CommandType.StoredProcedure;
 
                         Com.Parameters.Add(new SqlParameter("@ManufacturerID", ID));
-                        
+
                         DataAdapter = new SqlDataAdapter(Com);
 
                         dt = new DataTable();
                         DataAdapter.Fill(dt);
-                        
+
                         manufacturer = new Manufacturer
                         {
                             ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
@@ -942,7 +949,7 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Adding Manufacturer to Database
             /// </summary>
-            public void Add(string Name,string logo,string Email,string PhoneNumber,string PrimaryAddress,string SecondaryAddress, string WorkNumber = null)
+            public void Add(string Name, string logo, string Email, string PhoneNumber, string PrimaryAddress, string SecondaryAddress, string WorkNumber = null)
             {
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -955,7 +962,7 @@ namespace Katale_Server_.Database
                     using (Com = new SqlCommand(Query, Con))
                     {
                         Com.CommandType = CommandType.StoredProcedure;
-                        
+
                         Com.Parameters.Add(new SqlParameter("@Name", Name));
                         Com.Parameters.Add(new SqlParameter("@Logo", logo));
                         Com.Parameters.Add(new SqlParameter("@Email", Email));
@@ -976,7 +983,7 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Editing Manufacturer in Database
             /// </summary>
-            public void Edit(int ManufacturerID,string Name, string logo, string Email, string PhoneNumber, string PrimaryAddress, string SecondaryAddress, string WorkNumber = null)
+            public void Edit(int ManufacturerID, string Name, string logo, string Email, string PhoneNumber, string PrimaryAddress, string SecondaryAddress, string WorkNumber = null)
             {
                 if (Con.State == ConnectionState.Closed)
                 {
@@ -1040,7 +1047,7 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Adds Market to the Database
             /// </summary>
-            public void Add(string Name,string Description,string Address1,string Address2,string Address3 = null)
+            public void Add(string Name, string Description, string Address1, string Address2, string Address3 = null)
             {
                 using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
                 {
@@ -1055,7 +1062,7 @@ namespace Katale_Server_.Database
                         Com.CommandType = CommandType.StoredProcedure;
 
                         Com.Parameters.Add(new SqlParameter("@Name", Name));
-                        Com.Parameters.Add(new SqlParameter("@Description", Description));                
+                        Com.Parameters.Add(new SqlParameter("@Description", Description));
                         Com.Parameters.Add(new SqlParameter("@Address1", Address1));
                         Com.Parameters.Add(new SqlParameter("@Address2", Address2));
                         Com.Parameters.Add(new SqlParameter("@Address2", Address3));
@@ -1102,8 +1109,8 @@ namespace Katale_Server_.Database
                             {
                                 ID = Convert.ToInt32(dataRow[0].ToString()),
                                 Name = dataRow[1].ToString(),
-                                Description= dataRow[2].ToString(),
-                                
+                                Description = dataRow[2].ToString(),
+
                             };
 
                             Address address = new Address()
@@ -1117,7 +1124,7 @@ namespace Katale_Server_.Database
 
                             markets.Add(market);
                         }
-                        
+
                     }
 
                     Con.Close();
@@ -1180,7 +1187,7 @@ namespace Katale_Server_.Database
             /// <summary>
             /// Update market information in the database
             /// </summary>
-            public void Edit(int MarketID,int AddressID,string Name, string Description, string Address1, string Address2, string Address3 = null)
+            public void Edit(int MarketID, int AddressID, string Name, string Description, string Address1, string Address2, string Address3 = null)
             {
                 if (Con.State == ConnectionState.Closed)
                 {
@@ -1197,7 +1204,7 @@ namespace Katale_Server_.Database
                         Com.Parameters.Add(new SqlParameter("@MarketID", MarketID));
                         Com.Parameters.Add(new SqlParameter("@AddressID", AddressID));
                         Com.Parameters.Add(new SqlParameter("@Name", Name));
-                        Com.Parameters.Add(new SqlParameter("@Description", Description));                             
+                        Com.Parameters.Add(new SqlParameter("@Description", Description));
                         Com.Parameters.Add(new SqlParameter("@Address1", Address1));
                         Com.Parameters.Add(new SqlParameter("@Address2", Address2));
                         Com.Parameters.Add(new SqlParameter("@Address3", Address3));
@@ -1229,8 +1236,8 @@ namespace Katale_Server_.Database
                     {
                         Com.CommandType = CommandType.StoredProcedure;
 
-                        Com.Parameters.Add(new SqlParameter("@MarketID",MarketID));
-                        
+                        Com.Parameters.Add(new SqlParameter("@MarketID", MarketID));
+
                         Com.ExecuteNonQuery();
 
                     }

@@ -16,20 +16,20 @@ namespace Katale_Server_.Controllers
         Engine.Departments departments = new Engine.Departments();
         Engine.Categories categories = new Engine.Categories();
         Engine.Products products = new Engine.Products();
-       // DepartmentService departmentService = new DepartmentService(new DepartmentSqlDAO());
-       
+        IDepartmentService departmentService = new DepartmentService(new DepartmentSqlDAO());
+
         [HttpGet]
         public List<Department> Departments()
         {
         
-            return departments.Get();
+            return departmentService.GetAll();
 
         }
 
         [HttpGet]
         public Department Department(int id)
         {
-            return departments.Get(id);
+            return departmentService.GetSingle(id);
         }
 
    

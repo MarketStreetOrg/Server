@@ -152,8 +152,6 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Database\Cloud\AzureCloudConfig.cs" />
-    <Compile Include="Database\Cloud\IConfig.cs" />
     <Compile Include="Database\Generic\IGenericDAO.cs" />
     <Compile Include="Database\Service\IDepartmentService.cs" />
     <Compile Include="Database\Service\IService.cs" />

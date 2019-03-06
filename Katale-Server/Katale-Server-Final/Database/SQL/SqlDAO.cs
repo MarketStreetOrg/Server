@@ -1,6 +1,5 @@
 ﻿using Katale_Server_.Database;
 using Katale_Server_.Models;
-using Katale_Server_Final.Database.Cloud;
 using Katale_Server_Final.Utilities;
 using System;
 using System.Collections.Generic;
@@ -26,10 +25,7 @@ namespace Katale_Server_Final.Database
         protected static SqlDataReader Reader;
         protected string Query;
 
-        public SqlDAO()
-        {
-            GlobalConfigurations.Configuration = new AzureCloudConfig();
-        }
+      
 
     //    //Get Model Entity Attribute
     //    System.Reflection.MemberInfo memberInfo = typeof(T);
@@ -271,7 +267,7 @@ namespace Katale_Server_Final.Database
         protected SqlConnection CreateConnection()
         {
           
-            Con = new SqlConnection(GlobalConfigurations.CloudConnectionString);
+            Con = new SqlConnection(GlobalConfigurations.ConnectionString);
             
                 if (Connected())
                 {

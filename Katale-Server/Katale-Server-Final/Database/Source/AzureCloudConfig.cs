@@ -35,8 +35,7 @@ namespace Katale_Server_Final.Database.Source
 
             IniFile InitializationFile = new IniFile(ConfigurationManager.AppSettings["IniPath"]);
 
-            InitializationFile.Write("username", "steven");
-            InitializationFile.Write("Password", "Password@2019");
+            InitializationFile.Write("key", "values");
 
             string UserName = InitializationFile.Read("username");
             string Password = InitializationFile.Read("Password");

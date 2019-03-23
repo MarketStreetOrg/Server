@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Katale_Server_Final.Database.SQL
 {
-    public class DepartmentSqlDAO : SqlDAO , ISqlDAO<Department>
+    public class DepartmentSqlDAO : SqlDAO, ISqlDAO<Department>
     {
 
         public void Delete(int id)
@@ -42,34 +42,34 @@ namespace Katale_Server_Final.Database.SQL
 
             DataTable dt = null;
 
-            Con=this.CreateConnection();
-            
-                Query = "SelectDepartments";
+            Con = this.CreateConnection();
 
-                using (Com = new SqlCommand(Query, Con))
+            Query = "SelectDepartments";
+
+            using (Com = new SqlCommand(Query, Con))
+            {
+                Com.CommandType = CommandType.StoredProcedure;
+
+                DataAdapter = new SqlDataAdapter(Com);
+
+                dt = new DataTable();
+                DataAdapter.Fill(dt);
+
+                foreach (DataRow dataRow in dt.Rows)
                 {
-                    Com.CommandType = CommandType.StoredProcedure;
-
-                    DataAdapter = new SqlDataAdapter(Com);
-
-                    dt = new DataTable();
-                    DataAdapter.Fill(dt);
-
-                    foreach (DataRow dataRow in dt.Rows)
+                    Department department = new Department
                     {
-                        Department department = new Department
-                        {
-                            ID = Convert.ToInt32(dataRow[0].ToString()),
-                            Name = dataRow[1].ToString(),
-                            Description = dataRow[2].ToString(),
-                            Categories = Convert.ToInt32(dataRow[3].ToString())
+                        ID = Convert.ToInt32(dataRow[0].ToString()),
+                        Name = dataRow[1].ToString(),
+                        Description = dataRow[2].ToString(),
+                        Categories = Convert.ToInt32(dataRow[3].ToString())
 
-                        };
+                    };
 
-                        departments.Add(department);
-                    }
+                    departments.Add(department);
+                }
 
-                
+
 
                 Con.Close();
             }

@@ -1,8 +1,8 @@
 ﻿using Katale_Server_.Database;
 using Katale_Server_.Models;
-using Katale_Server_Final.Database;
-using Katale_Server_Final.Database.Service;
 using Katale_Server_Final.Database.SQL;
+using Katale_Server_Final.Service;
+using Katale_Server_Final.Service.Implementation;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,15 +13,14 @@ namespace Katale_Server_.Controllers
     [RoutePrefix("api/admin")]
     public class AdminController : ApiController
     {
-        Engine.Departments departments = new Engine.Departments();
+
         Engine.Categories categories = new Engine.Categories();
         Engine.Products products = new Engine.Products();
-        IDepartmentService departmentService = new DepartmentService(new DepartmentSqlDAO());
+        IDepartmentService departmentService = new DepartmentService();
 
         [HttpGet]
         public List<Department> Departments()
         {
-        
             return departmentService.GetAll();
 
         }
@@ -32,43 +31,43 @@ namespace Katale_Server_.Controllers
             return departmentService.GetSingle(id);
         }
 
-   
+
         [HttpPost]
         [Route("departments/add")]
         public void AddDepartment([FromBody]JObject Department)
         {
             JObject DepartmentObject = Department;
 
-            departments.Add(DepartmentObject["Name"].ToString(), DepartmentObject["Description"].ToString());
+            Department department = new Department(DepartmentObject["Name"].ToString(), DepartmentObject["Description"].ToString());
+
+            departmentService.Save(department);
         }
 
         [HttpPut]
         [Route("department/{id}/edit")]
-        public bool EditDepartment([FromBody]JObject Department,string id)
+        public Department EditDepartment([FromBody]JObject Department, string id)
         {
             try
             {
                 JObject DepartmentObject = Department;
+                Department department = new Department(DepartmentObject["Name"].ToString(), DepartmentObject["Description"].ToString());
 
-                departments.Edit(Convert.ToInt32(id), DepartmentObject["Name"].ToString(), DepartmentObject["Description"].ToString());
+                return departmentService.Update(department);
 
-                return true;
             }
             catch
             {
-                return false;
+                return null;
             }
         }
 
         [HttpDelete]
-        public bool DeleteDepartment([FromUri]int ID)
+        public void DeleteDepartment([FromUri]int ID)
         {
-            departments.Delete(ID);
-            
-            return true;
+            departmentService.Delete(ID);
         }
 
-        
+
         [HttpGet]
         [Route("department/{id}/categories")]
         public List<Category> DepartmentCategories([FromUri]int id)
@@ -95,27 +94,27 @@ namespace Katale_Server_.Controllers
         {
             JObject CategoryObject = Category;
 
-            categories.Add(Convert.ToInt32(CategoryObject["Departmentid"].ToString()),CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
+            categories.Add(Convert.ToInt32(CategoryObject["Departmentid"].ToString()), CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
         }
 
-       
+
         [HttpPut]
         [Route("categories/{id}/edit")]
-        public void EditCategory([FromBody] JObject Category,[FromUri]String id)
+        public void EditCategory([FromBody] JObject Category, [FromUri]String id)
         {
             JObject CategoryObject = Category;
-           
+
             categories.Edit(Convert.ToInt32(id), Convert.ToInt32(CategoryObject["Departmentid"].ToString()), CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
         }
-        
+
         [HttpDelete]
         [Route("categories/{id}/delete")]
         public void DeleteCategory(int id)
         {
             categories.Delete(id);
         }
-        
-       
+
+
         //Product functions
         [HttpGet]
         public List<Product> Products()
@@ -128,7 +127,7 @@ namespace Katale_Server_.Controllers
         {
             return products.Get(id);
         }
-        
+
         [HttpPost]
         [Route("products/add")]
         public void AddProduct([FromBody] JObject ProductObject)
@@ -140,11 +139,11 @@ namespace Katale_Server_.Controllers
 
         [HttpPut]
         [Route("products/{id}/edit")]
-        public void EditProduct([FromBody] JObject ProductObject,string id)
+        public void EditProduct([FromBody] JObject ProductObject, string id)
         {
             ProductObject = new JObject();
-            
-            products.Edit(Convert.ToInt32(id), Convert.ToInt32(ProductObject["ProductID"].ToString()), ProductObject["Name"].ToString(), ProductObject["Description"].ToString(),Convert.ToInt32(ProductObject["PromoFront"].ToString()), Convert.ToInt32(ProductObject["PromoDept"].ToString()));
+
+            products.Edit(Convert.ToInt32(id), Convert.ToInt32(ProductObject["ProductID"].ToString()), ProductObject["Name"].ToString(), ProductObject["Description"].ToString(), Convert.ToInt32(ProductObject["PromoFront"].ToString()), Convert.ToInt32(ProductObject["PromoDept"].ToString()));
         }
 
         [HttpDelete]
@@ -158,7 +157,7 @@ namespace Katale_Server_.Controllers
         [HttpGet]
         public void Markets()
         {
-            
+
         }
     }
 

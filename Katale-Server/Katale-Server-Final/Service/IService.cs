@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Katale_Server_Final.Database.Service
+namespace Katale_Server_Final.Service
 {
     public interface IService <T>
     {
@@ -19,6 +19,15 @@ namespace Katale_Server_Final.Database.Service
         List<T> GetAll();
 
         void Save(T t);
+
+        void Delete(int id);
+
+        /// <summary>
+        /// <paramref name="t"/>
+        /// </summary>
+        /// <returns></returns>
+        T Update(T t);
+        
 
     }
 }

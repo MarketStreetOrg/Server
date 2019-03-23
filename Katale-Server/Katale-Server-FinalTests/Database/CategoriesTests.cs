@@ -1,5 +1,4 @@
 ﻿using Katale_Server_.Models;
-using Katale_Server_Final.Database.SQL;
 using Katale_Server_Final.Service;
 using Katale_Server_Final.Service.Implementation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

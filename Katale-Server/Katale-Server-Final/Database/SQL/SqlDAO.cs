@@ -1,16 +1,7 @@
 ﻿using Katale_Server_.Database;
-using Katale_Server_.Models;
-using Katale_Server_Final.Database.Cloud;
 using Katale_Server_Final.Database.Source;
-using Katale_Server_Final.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Katale_Server_Final.Database
 {
@@ -26,11 +17,12 @@ namespace Katale_Server_Final.Database
         protected static SqlDataAdapter DataAdapter;
         protected static SqlDataReader Reader;
         protected string Query;
-        
+ 
         public SqlDAO()
         {
             GlobalConfigurations.Configuration = new AzureCloudConfig();
         }
+
 
         private bool Connected()
         {
@@ -40,6 +32,7 @@ namespace Katale_Server_Final.Database
 
         protected SqlConnection CreateConnection()
         {
+
 
             Con = new SqlConnection(GlobalConfigurations.ConnectionString);
 

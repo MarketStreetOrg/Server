@@ -31,7 +31,6 @@ namespace Katale_Server_Final.Database.Cloud
             var result = await keyVaultClient.GetSecretAsync("https://kataaledbvault.vault.azure.net/secrets/kataledatabaseazure/1c829cfd490c42058ef43b6ee9765643");
 
             CloudConnectionString = result.Value;
-
         }
 
         private static async Task<string> AuthenticateVaultAsync(string authority, string resource, string scope)

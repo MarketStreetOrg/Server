@@ -34,7 +34,7 @@ namespace Katale_Server_Final.Database.Source
             string cs=ConfigurationManager.ConnectionStrings["kataledatabaseazure"].ConnectionString.ToString();
 
             IniFile InitializationFile = new IniFile(ConfigurationManager.AppSettings["IniPath"]);
-            
+
             InitializationFile.Write("username", "steven");
             InitializationFile.Write("Password", "Password@2019");
 

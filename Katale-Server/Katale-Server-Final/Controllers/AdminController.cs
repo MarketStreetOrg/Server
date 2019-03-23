@@ -13,10 +13,10 @@ namespace Katale_Server_.Controllers
     [RoutePrefix("api/admin")]
     public class AdminController : ApiController
     {
-
-        Engine.Categories categories = new Engine.Categories();
+        
         Engine.Products products = new Engine.Products();
         IDepartmentService departmentService = new DepartmentService();
+        ICategoryService categoryService = new CategoryService();
 
         [HttpGet]
         public List<Department> Departments()
@@ -72,20 +72,21 @@ namespace Katale_Server_.Controllers
         [Route("department/{id}/categories")]
         public List<Category> DepartmentCategories([FromUri]int id)
         {
-            return categories.GetByDepartment(id);
+            return null;
+            //return departmentService.GetSingle(id); 
         }
 
         [HttpGet]
         //[Route("categories")]
         public List<Category> Categories()
         {
-            return categories.Get();
+            return categoryService.GetAll();
         }
 
         [HttpGet]
         public Category Category(int id)
         {
-            return categories.Get(id);
+            return categoryService.GetSingle(id);
         }
 
         [HttpPost]
@@ -94,7 +95,17 @@ namespace Katale_Server_.Controllers
         {
             JObject CategoryObject = Category;
 
-            categories.Add(Convert.ToInt32(CategoryObject["Departmentid"].ToString()), CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
+            Department department = new Department();
+            department.ID = Convert.ToInt32(CategoryObject["Departmentid"].ToString());
+
+            Category category = new Category.Builder()
+                                          .SetName(CategoryObject["Name"].ToString())
+                                          .SetDescription(CategoryObject["Description"].ToString())
+                                          .SetDepartment(department)
+                                          .Build();
+
+            categoryService.Save(category);
+           
         }
 
 
@@ -104,14 +115,23 @@ namespace Katale_Server_.Controllers
         {
             JObject CategoryObject = Category;
 
-            categories.Edit(Convert.ToInt32(id), Convert.ToInt32(CategoryObject["Departmentid"].ToString()), CategoryObject["Name"].ToString(), CategoryObject["Description"].ToString());
+            Department department = new Department();
+            department.ID = Convert.ToInt32(CategoryObject["Departmentid"].ToString());
+
+            Category category = new Category.Builder()
+                                         .SetName(CategoryObject["Name"].ToString())
+                                         .SetDescription(CategoryObject["Description"].ToString())
+                                         .SetDepartment(department)
+                                         .Build();
+
+            categoryService.Update(category);
         }
 
         [HttpDelete]
         [Route("categories/{id}/delete")]
         public void DeleteCategory(int id)
         {
-            categories.Delete(id);
+            categoryService.Delete(id);
         }
 
 

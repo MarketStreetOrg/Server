@@ -78,7 +78,6 @@ namespace Katale_Server_Final.Database.SQL
                             Description = dataRow[2].ToString(),
                             Department = departmentService.GetSingle(Convert.ToInt32(dataRow[3].ToString())),
                             Products = Convert.ToInt32(dataRow[5])
-
                         };
 
                         categories.Add(category);

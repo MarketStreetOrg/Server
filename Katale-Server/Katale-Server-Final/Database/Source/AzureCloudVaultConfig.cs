@@ -1,18 +1,15 @@
-﻿using Microsoft.Azure.KeyVault;
+﻿using Katale_Server_Final.Database.Source;
+using Microsoft.Azure.KeyVault;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Katale_Server_Final.Database.Cloud
 {
-    public class AzureCloudConfig : IConfig
+    public class AzureCloudVaultConfig : IConfig
     {
         private string CloudConnectionString = null;
 
-        public AzureCloudConfig()
+        public AzureCloudVaultConfig()
         {
             LoadConfigurations();
         }

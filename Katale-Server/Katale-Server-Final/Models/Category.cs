@@ -16,8 +16,7 @@ namespace Katale_Server_.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-
-        [Transient]
+        
         public Department Department { get; set; }
         /// <summary>
         /// Returns the number of products within this category
@@ -40,6 +39,37 @@ namespace Katale_Server_.Models
         //{
         //    return departments.Get(DepartmentID);
         //}
+
+        public class Builder
+        {
+            private Category category=new Category();
+
+            public Builder SetName(string Name)
+            {
+                category.Name = Name;
+
+                return this;
+            }
+
+            public Builder SetDescription(string Description)
+            {
+                category.Description = Description;
+
+                return this;
+            }
+
+            public Builder SetDepartment(Department department)
+            {
+                category.Department = department;
+
+                return this;
+            }
+
+            public Category Build()
+            {
+                return category;
+            }
+        }
 
     }
 }

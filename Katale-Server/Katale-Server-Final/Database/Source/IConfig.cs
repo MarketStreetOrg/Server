@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Katale_Server_Final.Database.Cloud
+namespace Katale_Server_Final.Database.Source
 {
     public interface IConfig
     {
-        String GetConnectionString();
+        string GetConnectionString();
         void LoadConfigurations();
 
     }

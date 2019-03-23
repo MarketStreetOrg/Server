@@ -37,7 +37,58 @@ namespace Katale_Server_.Models
         //    return categories.Get(CategoryID);
         //}
 
-       
+        public class Builder
+        {
+            private Product product = new Product();
+
+            public Builder SetName(string Name)
+            {
+                product.Name = Name;
+
+                return this;
+            }
+
+            public Builder SetDescription(string Description)
+            {
+                product.Description = Description;
+
+                return this;
+            }
+
+            public Builder IsPromoDepartment(bool boolean)
+            {
+                product.PromoDept = boolean;
+
+                return this;
+            }
+
+            public Builder IsPromoFront(bool boolean)
+            {
+                product.PromoFront = boolean;
+
+                return this;
+            }
+
+            public Builder IsInStock(bool boolean)
+            {
+                product.InStock = boolean;
+
+                return this;
+            }
+
+            public Builder SetCategory(Category category)
+            {
+                product.Category = category;
+
+                return this;
+            }
+
+            public Product Build()
+            {
+                return product;
+            }
+        }
 
     }
+    
 }

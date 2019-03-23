@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Katale_Server_Final.Database.Service
+namespace Katale_Server_Final.Service
 {
-    public interface IDepartmentService : IService<Department>
+    public interface ICategoryService : IService<Category>
     {
-       
-       
 
     }
 }

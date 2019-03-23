@@ -1,4 +1,5 @@
 ﻿using Katale_Server_Final.Database.Cloud;
+using Katale_Server_Final.Database.Source;
 using Microsoft.Azure.KeyVault;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
@@ -10,24 +11,16 @@ using System.Web;
 
 namespace Katale_Server_.Database
 {
-    public static class GlobalConfigurations
+    public class GlobalConfigurations
     {
         public static IConfig Configuration { get; set; }
         
-     
-        public static string CloudConnectionString
-        {
-            get
-            {
-                return Configuration.GetConnectionString();
-            }
-        }
         
         public static string ConnectionString
         {
             get
             {
-                return ConfigurationManager.ConnectionStrings["kataledatabase"].ToString();
+                return Configuration.GetConnectionString();
             }
         }
     }

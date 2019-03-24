@@ -13,10 +13,11 @@ namespace Katale_Server_.Controllers
     [RoutePrefix("api/admin")]
     public class AdminController : ApiController
     {
-        
+
         Engine.Products products = new Engine.Products();
         IDepartmentService departmentService = new DepartmentService();
         ICategoryService categoryService = new CategoryService();
+        IProductService productService = new ProductService();
 
         [HttpGet]
         public List<Department> Departments()
@@ -73,7 +74,7 @@ namespace Katale_Server_.Controllers
         public List<Category> DepartmentCategories([FromUri]int id)
         {
             return null;
-            //return departmentService.GetSingle(id); 
+            //return departmentSqlDao.GetSingle(id); 
         }
 
         [HttpGet]
@@ -105,7 +106,7 @@ namespace Katale_Server_.Controllers
                                           .Build();
 
             categoryService.Save(category);
-           
+
         }
 
 
@@ -137,15 +138,17 @@ namespace Katale_Server_.Controllers
 
         //Product functions
         [HttpGet]
+        [Route("products")]
         public List<Product> Products()
         {
-            return products.Get();
+            return productService.GetAll();
         }
 
         [HttpGet]
+        [Route("product/{id}")]
         public Product Product(int id)
         {
-            return products.Get(id);
+            return productService.GetSingle(id);
         }
 
         [HttpPost]
@@ -154,23 +157,47 @@ namespace Katale_Server_.Controllers
         {
             ProductObject = new JObject();
 
-            products.Add(Convert.ToInt32(ProductObject["CategoryID"].ToString()), ProductObject["Name"].ToString(), ProductObject["Description"].ToString());
+            Category category = new Category();
+            category.ID = Convert.ToInt32(ProductObject["CategoryID"].ToString());
+
+            Product product = new Product.Builder()
+                                        .SetName(ProductObject["Name"].ToString())
+                                        .SetDescription(ProductObject["Description"].ToString())
+                                        .SetCategory(category)
+                                        .IsPromoDepartment(true)
+                                        .IsPromoFront(true)
+                                        .IsInStock(true)
+                                        .Build();
+
+            productService.Save(product);
         }
 
         [HttpPut]
-        [Route("products/{id}/edit")]
+        [Route("product/{id}/edit")]
         public void EditProduct([FromBody] JObject ProductObject, string id)
         {
             ProductObject = new JObject();
 
-            products.Edit(Convert.ToInt32(id), Convert.ToInt32(ProductObject["ProductID"].ToString()), ProductObject["Name"].ToString(), ProductObject["Description"].ToString(), Convert.ToInt32(ProductObject["PromoFront"].ToString()), Convert.ToInt32(ProductObject["PromoDept"].ToString()));
+            Category category = new Category();
+            category.ID = Convert.ToInt32(ProductObject["CategoryID"].ToString());
+
+            Product product = productService.GetSingle(id);
+
+            product.Name = ProductObject["Name"].ToString();
+            product.Description = ProductObject["Description"].ToString();
+            product.Category = category;
+            product.PromoDept = Convert.ToBoolean(ProductObject["PromoDept"].ToString());
+            product.PromoFront = Convert.ToBoolean(ProductObject["PromoFront"].ToString());
+            product.InStock = true;         
+           
+            productService.Update(product);
         }
 
         [HttpDelete]
         [Route("products/{id}/delete")]
         public void DeleteProduct(int ID)
         {
-            products.Delete(ID);
+            productService.Delete(ID);
         }
 
         //Market Functions

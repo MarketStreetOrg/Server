@@ -14,7 +14,7 @@ namespace Katale_Server_Final.Database.SQL
     public class CategorySqlDAO : SqlDAO, ISqlDAO<Category>
     {
         
-        IDepartmentService departmentService=new DepartmentService();
+        DepartmentSqlDAO departmentSqlDao=new DepartmentSqlDAO();
 
         public void Delete(int id)
         {
@@ -76,7 +76,7 @@ namespace Katale_Server_Final.Database.SQL
                             ID = Convert.ToInt32(dataRow[0].ToString()),
                             Name = dataRow[1].ToString(),
                             Description = dataRow[2].ToString(),
-                            Department = departmentService.GetSingle(Convert.ToInt32(dataRow[3].ToString())),
+                            Department = departmentSqlDao.GetByID(Convert.ToInt32(dataRow[3].ToString())),
                             Products = Convert.ToInt32(dataRow[5])
                         };
 
@@ -122,7 +122,7 @@ namespace Katale_Server_Final.Database.SQL
                         ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
                         Name = dt.Rows[0][1].ToString(),
                         Description = dt.Rows[0][2].ToString(),
-                        Department = departmentService.GetSingle(Convert.ToInt32(dt.Rows[0][3].ToString())),
+                        Department = departmentSqlDao.GetByID(Convert.ToInt32(dt.Rows[0][3].ToString())),
                         Products = Convert.ToInt32(dt.Rows[0][5])
 
                     };
@@ -165,7 +165,7 @@ namespace Katale_Server_Final.Database.SQL
                         ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
                         Name = dt.Rows[0][1].ToString(),
                         Description = dt.Rows[0][2].ToString(),
-                        Department = departmentService.GetSingle(Convert.ToInt32(dt.Rows[0][3].ToString())),
+                        Department = departmentSqlDao.GetByID(Convert.ToInt32(dt.Rows[0][3].ToString())),
                         Products = Convert.ToInt32(dt.Rows[0][5])
 
                     };

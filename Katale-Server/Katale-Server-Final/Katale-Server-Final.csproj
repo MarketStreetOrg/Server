@@ -157,6 +157,11 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\ManufacturerController.cs" />
+    <Compile Include="Controllers\MarketController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Database\Source\AzureCloudConfig.cs" />
     <Compile Include="Database\Source\AzureCloudVaultConfig.cs" />
     <Compile Include="Database\Source\IConfig.cs" />
@@ -211,6 +216,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Category\" />
+    <Folder Include="Views\Department\" />
+    <Folder Include="Views\Manufacturer\" />
+    <Folder Include="Views\Market\" />
+    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

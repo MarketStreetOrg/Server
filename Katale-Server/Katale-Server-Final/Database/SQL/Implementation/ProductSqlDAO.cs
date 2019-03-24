@@ -49,6 +49,8 @@ namespace Katale_Server_Final.Database.SQL.Implementation
             Com.Connection = Con;
             Com.CommandText = Query;
 
+            Com.Parameters.Clear();
+
             Com.CommandType = CommandType.StoredProcedure;
 
             DataAdapter.SelectCommand = Com;

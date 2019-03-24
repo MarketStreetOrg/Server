@@ -101,6 +101,7 @@ namespace Katale_Server_Final.Database.SQL
                 department.ID = Convert.ToInt32(dt.Rows[0][0].ToString());
                 department.Name = dt.Rows[0][1].ToString();
                 department.Description = dt.Rows[0][2].ToString();
+                department.Categories = Convert.ToInt32(dt.Rows[0][3].ToString());
 
             }
 
@@ -134,7 +135,7 @@ namespace Katale_Server_Final.Database.SQL
                 department.ID = Convert.ToInt32(dt.Rows[0][0].ToString());
                 department.Name = dt.Rows[0][1].ToString();
                 department.Description = dt.Rows[0][2].ToString();
-
+                department.Categories = Convert.ToInt32(dt.Rows[0][3].ToString());
             }
 
             Con.Close();

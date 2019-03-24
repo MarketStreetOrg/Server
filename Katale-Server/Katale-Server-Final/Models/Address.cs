@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Katale_Server_Final.Side_Code
+namespace Katale_Server_Final.Models
 {
     public class Address
     {

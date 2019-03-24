@@ -163,9 +163,18 @@
     <Compile Include="Database\Generic\IGenericDAO.cs" />
     <Compile Include="Database\Source\LocalSQLConfig.cs" />
     <Compile Include="Database\SQL\Implementation\CategorySqlDAO.cs" />
+    <Compile Include="Database\SQL\Implementation\ManufacturerSqlDAO.cs" />
+    <Compile Include="Database\SQL\Implementation\MarketSqlDAO.cs" />
+    <Compile Include="Database\SQL\Implementation\ProductSqlDAO.cs" />
     <Compile Include="Service\IDepartmentService.cs" />
     <Compile Include="Service\ICategoryService.cs" />
+    <Compile Include="Service\IManufacturerService.cs" />
+    <Compile Include="Service\IMarketService.cs" />
     <Compile Include="Service\Implementation\CategoryService.cs" />
+    <Compile Include="Service\Implementation\ManufacturerService.cs" />
+    <Compile Include="Service\Implementation\MarketService.cs" />
+    <Compile Include="Service\Implementation\ProductService.cs" />
+    <Compile Include="Service\IProductService.cs" />
     <Compile Include="Service\IService.cs" />
     <Compile Include="Database\SQL\Implementation\DepartmentSqlDAO.cs" />
     <Compile Include="Database\SQL\IsqlDAO.cs" />
@@ -183,7 +192,7 @@
     <Compile Include="Models\Market.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Side Code\Address.cs" />
+    <Compile Include="Models\Address.cs" />
     <Compile Include="Side Code\ImageProcessor.cs" />
     <Compile Include="Utilities\AOP\LoggingAspect.cs" />
     <Compile Include="Utilities\Column.cs" />

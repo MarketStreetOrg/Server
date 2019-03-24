@@ -12,9 +12,9 @@ namespace Katale_Server_Final.Database
     public abstract class SqlDAO
     {
         //TODO: Create a connection accessor and use it here
-        protected static SqlConnection Con;
-        protected static SqlCommand Com;
-        protected static SqlDataAdapter DataAdapter;
+        protected static SqlConnection Con=new SqlConnection();
+        protected static SqlCommand Com=new SqlCommand();
+        protected static SqlDataAdapter DataAdapter=new SqlDataAdapter();
         protected static SqlDataReader Reader;
         protected string Query;
  
@@ -33,7 +33,6 @@ namespace Katale_Server_Final.Database
         protected SqlConnection CreateConnection()
         {
 
-
             Con = new SqlConnection(GlobalConfigurations.ConnectionString);
 
             if (Connected())
@@ -45,42 +44,6 @@ namespace Katale_Server_Final.Database
 
             return Con;
         }
-
-        ///**
-        // *Load respective properties from the Domain Object
-        // *Used to create mapping to the Current domain object
-        // */
-        //public Dictionary<PropertyInfo, Column> LoadProperties()
-        //{
-        //    PropertyInfo[] properties = typeof(T).GetProperties();
-
-        //    Dictionary<PropertyInfo, Column> SelectedProperties = new Dictionary<PropertyInfo, Column>();
-
-        //    properties = properties.Where(p => !(p.GetCustomAttributes().Any(a => a.GetType().Equals(typeof(Transient))))).ToArray();
-
-        //    foreach (PropertyInfo property in properties)
-        //    {
-
-        //        String name = property.Name;
-        //        Column column = new Column(name,false);
-
-        //        if (property.GetCustomAttributes().Any(a => a.GetType().Equals(typeof(Column))))
-        //        {
-        //            column = property.GetCustomAttributes<Column>().Select(a => a).First();
-
-        //        }
-
-        //        SelectedProperties.Add(property,column);
-        //    }
-
-        //    return SelectedProperties;
-        //}
-
-        //public void Delete(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
+        
     }
 }

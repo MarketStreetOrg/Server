@@ -63,6 +63,7 @@
     <Compile Include="Database\Service\DepartmentServiceTests.cs" />
     <Compile Include="Database\Service\MarketServiceTests.cs" />
     <Compile Include="Database\Service\ProductServiceTests.cs" />
+    <Compile Include="Database\Service\ManufacturerServiceTests.cs" />
     <Compile Include="Database\SqlDAOTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AOP\LoggingAspectTests.cs" />

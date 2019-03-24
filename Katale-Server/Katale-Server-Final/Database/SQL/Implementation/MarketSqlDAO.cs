@@ -50,6 +50,8 @@ namespace Katale_Server_Final.Database.SQL.Implementation
 
             Com.CommandType = CommandType.StoredProcedure;
 
+            Com.Parameters.Clear();
+
             DataAdapter = new SqlDataAdapter(Com);
 
             dt = new DataTable();

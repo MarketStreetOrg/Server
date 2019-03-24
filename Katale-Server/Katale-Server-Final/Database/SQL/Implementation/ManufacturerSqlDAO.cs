@@ -1,4 +1,5 @@
 ﻿using Katale_Server_.Models;
+using Katale_Server_Final.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -43,6 +44,7 @@ namespace Katale_Server_Final.Database.SQL.Implementation
             Com.CommandText = Query;
 
             Com.CommandType = CommandType.StoredProcedure;
+            Com.Parameters.Clear();
 
             DataAdapter.SelectCommand = Com;
 
@@ -52,17 +54,22 @@ namespace Katale_Server_Final.Database.SQL.Implementation
 
             foreach (DataRow dataRow in dt.Rows)
             {
+                Address address = new Address();
+
                 Manufacturer manufacturer = new Manufacturer
                 {
                     ID = Convert.ToInt32(dataRow[0].ToString()),
                     Name = dataRow[1].ToString(),
-                    Email = dataRow[6].ToString(),
                     Logo = dataRow[2].ToString(),
-                    PhoneNumber = dataRow[7].ToString(),
-                    PrimaryAddress = dataRow[3].ToString(),
-                    SecondaryAddress = dataRow[4].ToString(),
-                    WorkNumber = dataRow[8].ToString()
                 };
+
+                address.Email = dataRow[6].ToString();
+                address.PhoneNumber = dataRow[7].ToString();
+                address.Address1 = dataRow[3].ToString();
+                address.Address2 = dataRow[4].ToString();
+                address.WorkNumber = dataRow[8].ToString();
+
+                manufacturer.Address = address;
 
                 manufacturers.Add(manufacturer);
 
@@ -86,7 +93,7 @@ namespace Katale_Server_Final.Database.SQL.Implementation
 
 
             Com.CommandType = CommandType.StoredProcedure;
-
+            Com.Parameters.Clear();
             Com.Parameters.Add(new SqlParameter("@ManufacturerID", id));
 
             DataAdapter.SelectCommand = Com;
@@ -94,17 +101,22 @@ namespace Katale_Server_Final.Database.SQL.Implementation
             dt = new DataTable();
             DataAdapter.Fill(dt);
 
+            Address address = new Address();
+
             manufacturer = new Manufacturer
             {
                 ID = Convert.ToInt32(dt.Rows[0][0].ToString()),
                 Name = dt.Rows[0][1].ToString(),
-                Email = dt.Rows[0][6].ToString(),
                 Logo = dt.Rows[0][2].ToString(),
-                PhoneNumber = dt.Rows[0][7].ToString(),
-                PrimaryAddress = dt.Rows[0][3].ToString(),
-                SecondaryAddress = dt.Rows[0][4].ToString(),
-                WorkNumber = dt.Rows[0][8].ToString()
             };
+
+            address.Email = dt.Rows[0][6].ToString();
+            address.PhoneNumber = dt.Rows[0][7].ToString();
+            address.Address1 = dt.Rows[0][3].ToString();
+            address.Address2 = dt.Rows[0][4].ToString();
+            address.WorkNumber = dt.Rows[0][8].ToString();
+
+            manufacturer.Address = address;
 
             return manufacturer;
         }
@@ -119,11 +131,28 @@ namespace Katale_Server_Final.Database.SQL.Implementation
             throw new NotImplementedException();
         }
 
-        public void Save(Manufacturer model)
+        public void Save(Manufacturer manufacturer)
         {
+            Query = "AddManufacturer";
+
             Con = CreateConnection();
             Com.Connection = Con;
             Com.CommandText = Query;
+           
+            Com.CommandType = CommandType.StoredProcedure;
+            Com.Parameters.Clear();
+            Com.Parameters.Add(new SqlParameter("@Name", manufacturer.Name));
+            Com.Parameters.Add(new SqlParameter("@Logo", manufacturer.Logo));
+            Com.Parameters.Add(new SqlParameter("@Email", manufacturer.Address.Email));
+            Com.Parameters.Add(new SqlParameter("@PhoneNumber", manufacturer.Address.PhoneNumber));
+            Com.Parameters.Add(new SqlParameter("@WorkNumber", manufacturer.Address.WorkNumber));
+            Com.Parameters.Add(new SqlParameter("@Address1", manufacturer.Address.Address1));
+            Com.Parameters.Add(new SqlParameter("@Address2", manufacturer.Address.Address2));
+
+            Com.ExecuteNonQuery();
+
+            Con.Close();
+
         }
 
         public void Update(Manufacturer manufacturer)
@@ -135,14 +164,17 @@ namespace Katale_Server_Final.Database.SQL.Implementation
             Com.CommandText = Query;
 
             Com.CommandType = CommandType.StoredProcedure;
+            Com.Parameters.Clear();
 
+            Com.Parameters.Add(new SqlParameter("@ManufacturerID", manufacturer.ID));
             Com.Parameters.Add(new SqlParameter("@Name", manufacturer.Name));
             Com.Parameters.Add(new SqlParameter("@Logo", manufacturer.Logo));
-            Com.Parameters.Add(new SqlParameter("@Email", manufacturer.Email));
-            Com.Parameters.Add(new SqlParameter("@PhoneNumber", manufacturer.PhoneNumber));
-            Com.Parameters.Add(new SqlParameter("@WorkNumber", manufacturer.WorkNumber));
-            Com.Parameters.Add(new SqlParameter("@Address1", manufacturer.PrimaryAddress));
-            Com.Parameters.Add(new SqlParameter("@Address2", manufacturer.SecondaryAddress));
+            Com.Parameters.Add(new SqlParameter("@Email", manufacturer.Address.Email));
+            Com.Parameters.Add(new SqlParameter("@PhoneNumber", manufacturer.Address.PhoneNumber));
+            Com.Parameters.Add(new SqlParameter("@WorkNumber", manufacturer.Address.WorkNumber));
+            Com.Parameters.Add(new SqlParameter("@AddressID", manufacturer.Address.ID));
+            Com.Parameters.Add(new SqlParameter("@Address1", manufacturer.Address.Address1));
+            Com.Parameters.Add(new SqlParameter("@Address2", manufacturer.Address.Address2));
 
             Com.ExecuteNonQuery();
 

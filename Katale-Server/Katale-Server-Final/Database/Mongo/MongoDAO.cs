@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Katale_Server_.Database;
+using Katale_Server_Final.Database.Source;
+using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,42 +9,20 @@ using System.Threading.Tasks;
 
 namespace Katale_Server_Final.Database
 {
-    public class MongoDAO<T> : IGenericDAO<T>
+    public abstract class MongoDAO
     {
-      
-        public void Delete(int id)
+        public MongoClient mongoClient { get; }
+        public IMongoDatabase mongoDB { get; }
+        
+
+        public MongoDAO()
         {
-            throw new NotImplementedException();
+            GlobalConfigurations.Configuration = new LocalMongoDBConfig();
+
+            mongoClient = new MongoClient(GlobalConfigurations.ConnectionString);
+
+            mongoDB=mongoClient.GetDatabase("Katale", null);
         }
 
-        public bool Exists(T model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<T> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public T GetByID(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save(T model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(T Model)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

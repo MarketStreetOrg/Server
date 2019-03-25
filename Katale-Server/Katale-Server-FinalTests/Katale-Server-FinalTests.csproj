@@ -58,6 +58,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Database\CategoriesTests.cs" />
+    <Compile Include="Database\DAO\DepartmentMongoTests.cs" />
     <Compile Include="Database\DomainTest.cs" />
     <Compile Include="Database\ServiceTest.cs" />
     <Compile Include="Database\Service\DepartmentServiceTests.cs" />

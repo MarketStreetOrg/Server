@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace Katale_Server_Final.Utilities
 {
     public class IniFile
     {
-        string Path;
+        public string Path = ConfigurationManager.AppSettings["IniPath"].ToString();
         string SectionName = "Katale-Config";
 
         [DllImport("kernel32", CharSet = CharSet.Unicode)]

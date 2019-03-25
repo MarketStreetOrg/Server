@@ -24,7 +24,7 @@ namespace Katale_Server_Final.Service.Implementation
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            CategoryDAO.Delete(id);
         }
 
         public List<Category> GetAll()

@@ -21,7 +21,7 @@ namespace Katale_Server_Final.Database
 
             mongoClient = new MongoClient(GlobalConfigurations.ConnectionString);
 
-            mongoDB=mongoClient.GetDatabase("Katale", null);
+            mongoDB = mongoClient.GetDatabase("Katale", null);
         }
 
     }

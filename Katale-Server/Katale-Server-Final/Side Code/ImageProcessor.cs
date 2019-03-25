@@ -77,7 +77,6 @@ namespace Katale_Server_Final.Side_Code
 
         private async Task<bool> ImageExists(string Path)
         {
-
            
             if (File.Exists(Path))
             {

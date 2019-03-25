@@ -31,16 +31,15 @@ namespace Katale_Server_Final.Utilities.Messaging.implementation
         {
             var consumer = new EventingBasicConsumer(channel);
 
-            consumer.Received += new EventHandler<BasicDeliverEventArgs>(MessageReceived);
-           
-        }
+            consumer.Received += (ch,ea)=>
+            {
+                channel.BasicAck(ea.DeliveryTag, false);
 
-        private void MessageReceived(object sender, BasicDeliverEventArgs e)
-        {
+                System.Diagnostics.Debug.WriteLine(ea.Body.ToString());
+            };
 
-            
-            System.Diagnostics.Debug.WriteLine(e.Body.ToString());
-            
+            channel.BasicConsume(this.Queue, false, consumer);
         }
+        
     }
 }

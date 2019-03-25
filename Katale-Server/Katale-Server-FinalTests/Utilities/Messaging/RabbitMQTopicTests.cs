@@ -16,12 +16,18 @@ namespace Katale_Server_FinalTests.Utilities.Messaging
         public void TestSendMessage()
         {
             Department department = new Department("Depo", "Depo desc");
-
-            RabbitMQConsumer.ReceiveAsync();
-
+            
             rabbitMQProducer.Send(department,"test.me");
 
             
+        }
+
+        [TestMethod]
+        public void TestReceiveMessage()
+        {
+            
+            RabbitMQConsumer.ReceiveAsync();
+
 
         }
     }

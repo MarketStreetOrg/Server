@@ -43,7 +43,15 @@ namespace Katale_Server_Final.Database.Mongo.Implementation
 
         public void Save(Category category)
         {
-            collection.InsertOne(category);
+            try
+            {
+                collection.InsertOne(category);
+            }
+            catch
+            {
+
+            }
+            
         }
 
         public void Update(Category Model)

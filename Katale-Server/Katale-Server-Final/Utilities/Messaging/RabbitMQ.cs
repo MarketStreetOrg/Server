@@ -8,7 +8,7 @@ namespace Katale_Server_Final.Utilities.Messaging
 {
     public abstract class RabbitMQ
     {
-        private IConnectionFactory connectionFactory = new ConnectionFactory();
+        public IConnectionFactory connectionFactory = new ConnectionFactory();
         public IConnection connection = null;
 
         protected string Exchange { get; set; }

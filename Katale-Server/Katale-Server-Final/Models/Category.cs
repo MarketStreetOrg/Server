@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using Katale_Server_.Database;
+﻿using Katale_Server_Final.Database;
 using Katale_Server_Final.Utilities;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace Katale_Server_.Models
 {
@@ -14,7 +11,7 @@ namespace Katale_Server_.Models
     {
         Engine.Departments departments = new Engine.Departments();
 
-        [BsonElement("_id"),BsonId]
+        [BsonElement("_id"), BsonId]
         public int ID { get; set; }
 
         [BsonElement("name")]
@@ -22,24 +19,28 @@ namespace Katale_Server_.Models
 
         [BsonElement("description")]
         public string Description { get; set; }
-        
-        [BsonElement("department")]
+
+        [BsonElement("_department")]
         public Department Department { get; set; }
         /// <summary>
         /// Returns the number of products within this category
         /// </summary>
+        /// 
         
-        [BsonElement("productCount"),BsonIgnoreIfNull]
+        [BsonElement]
+        public List<Product> Products { get; set; }
+
+        [BsonElement("productCount")]
         [Transient]
-        public int Products{ get; set; }
+        public int ProductCount { get; set; }
 
         public Category()
         {
-            
+
 
         }
-           
-        
+
+
         /////<summary>
         /////Get Department where this category stands
         ///// </summary>
@@ -50,7 +51,7 @@ namespace Katale_Server_.Models
 
         public class Builder
         {
-            private Category category=new Category();
+            private Category category = new Category();
 
             public Builder SetName(string Name)
             {

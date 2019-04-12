@@ -51,8 +51,7 @@ namespace Katale_Server_Final.Database.Mongo.Implementation
         }
 
         public async void Save(Department department)
-        {
-
+        {        
             await collection.InsertOneAsync(department);
         }
 

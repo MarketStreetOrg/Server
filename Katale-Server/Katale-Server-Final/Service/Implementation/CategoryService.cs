@@ -58,6 +58,11 @@ namespace Katale_Server_Final.Service.Implementation
 
             return CategoryDAO.GetByID(category.ID);
         }
+
+        public bool Exists(Category category)
+        {
+            return CategoryDAO.Exists(category);
+        }
     }
 
 }

@@ -1,13 +1,9 @@
-﻿using Katale_Server_.Database;
-using Katale_Server_.Models;
-using Katale_Server_Final.Service;
-using Katale_Server_Final.Service.Implementation;
+﻿using Katale_Server_.Models;
+using Katale_Server_Final.Database.Source;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace Katale_Server_Final.Database.SQL
 {
@@ -15,7 +11,14 @@ namespace Katale_Server_Final.Database.SQL
     {
         
         DepartmentSqlDAO departmentSqlDao=new DepartmentSqlDAO();
+        public string constring;
 
+        public CategorySqlDAO() : base()
+        {
+            GlobalConfigurations.Configuration = new LocalSQLConfig();
+            constring = GlobalConfigurations.ConnectionString;
+        }
+        
         public void Delete(int id)
         {
             if (Con.State == ConnectionState.Closed)
@@ -51,6 +54,7 @@ namespace Katale_Server_Final.Database.SQL
             DataTable dt = null;
             List<Category> categories = new List<Category>();
 
+         
             using (Con = new SqlConnection(GlobalConfigurations.ConnectionString))
             {
                 if (Con.State == ConnectionState.Closed)
@@ -77,7 +81,7 @@ namespace Katale_Server_Final.Database.SQL
                             Name = dataRow[1].ToString(),
                             Description = dataRow[2].ToString(),
                             Department = departmentSqlDao.GetByID(Convert.ToInt32(dataRow[3].ToString())),
-                            Products = Convert.ToInt32(dataRow[5])
+                            ProductCount = Convert.ToInt32(dataRow[5])
                         };
 
                         categories.Add(category);
@@ -123,7 +127,7 @@ namespace Katale_Server_Final.Database.SQL
                         Name = dt.Rows[0][1].ToString(),
                         Description = dt.Rows[0][2].ToString(),
                         Department = departmentSqlDao.GetByID(Convert.ToInt32(dt.Rows[0][3].ToString())),
-                        Products = Convert.ToInt32(dt.Rows[0][5])
+                        ProductCount = Convert.ToInt32(dt.Rows[0][5])
 
                     };
 
@@ -166,7 +170,7 @@ namespace Katale_Server_Final.Database.SQL
                         Name = dt.Rows[0][1].ToString(),
                         Description = dt.Rows[0][2].ToString(),
                         Department = departmentSqlDao.GetByID(Convert.ToInt32(dt.Rows[0][3].ToString())),
-                        Products = Convert.ToInt32(dt.Rows[0][5])
+                        ProductCount = Convert.ToInt32(dt.Rows[0][5])
 
                     };
 

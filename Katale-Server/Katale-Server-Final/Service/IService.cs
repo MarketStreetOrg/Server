@@ -19,6 +19,7 @@ namespace Katale_Server_Final.Service
         List<T> GetAll();
 
         void Save(T t);
+        bool Exists(T t);
 
         void Delete(int id);
 

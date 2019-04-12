@@ -13,6 +13,7 @@ namespace Katale_Server_Final
         {
             //GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            
         }
     }
 }

@@ -1,21 +1,16 @@
 ﻿using Katale_Server_.Models;
-using Katale_Server_Final.Utilities.Exceptions;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Katale_Server_Final.Database.Mongo.Implementation
+namespace Katale_Server_Final.Database.Neo4j.Implementation
 {
-    public class CategoryMongoDAO : MongoDAO, IMongoDAO<Category>
+    public class CategoryGraphDAO : Neo4jDAO, INeo4jDAO<Category>
     {
-        IMongoCollection<Category> collection;
-
-        public CategoryMongoDAO()
+        public CategoryGraphDAO(): base()
         {
-            collection = mongoDB.GetCollection<Category>("categories");
+
         }
 
         public void Delete(int id)
@@ -23,14 +18,14 @@ namespace Katale_Server_Final.Database.Mongo.Implementation
             throw new NotImplementedException();
         }
 
-        public bool Exists(Category category)
+        public bool Exists(Category model)
         {
-            return collection.Find(c => c.ID == category.ID).Any();
+            throw new NotImplementedException();
         }
 
         public List<Category> GetAll()
         {
-            return collection.Find(cat => true).ToList();
+            throw new NotImplementedException();
         }
 
         public Category GetByID(int id)
@@ -45,10 +40,7 @@ namespace Katale_Server_Final.Database.Mongo.Implementation
 
         public void Save(Category category)
         {
-            if (Exists(category)) throw new RecordExistsException(category.Name);
-
-            collection.InsertOne(category);
-
+            session.Run("CREATE (c:category{name:$name,})",new {category.Name});
         }
 
         public void Update(Category Model)

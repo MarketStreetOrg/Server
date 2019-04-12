@@ -58,5 +58,10 @@ namespace Katale_Server_Final.Service.Implementation
 
             return MarketDAO.GetByID(market.ID);
         }
+
+        public bool Exists(Market market)
+        {
+            return MarketDAO.Exists(market);
+        }
     }
 }

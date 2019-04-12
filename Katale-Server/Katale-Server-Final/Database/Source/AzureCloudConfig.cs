@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 
-namespace Katale_Server_Final.Database.Source
+namespace Katale_Server_Final.Source
 {
     public class AzureCloudConfig : IConfig
     {

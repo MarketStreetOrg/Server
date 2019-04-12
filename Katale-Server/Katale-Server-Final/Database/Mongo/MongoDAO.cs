@@ -1,11 +1,5 @@
-﻿using Katale_Server_.Database;
-using Katale_Server_Final.Database.Source;
+﻿using Katale_Server_Final.Database.Source;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Katale_Server_Final.Database
 {
@@ -21,7 +15,7 @@ namespace Katale_Server_Final.Database
 
             mongoClient = new MongoClient(GlobalConfigurations.ConnectionString);
 
-            mongoDB = mongoClient.GetDatabase("Katale", null);
+            mongoDB = mongoClient.GetDatabase("katale_product_catalog", null);
         }
 
     }

@@ -28,11 +28,8 @@ namespace Katale_Server_Final.Service.Implementation
             ManufacturerDAO.Delete(id);
         }
 
-        public List<Manufacturer> GetAll()
-        {
-            return ManufacturerDAO.GetAll();
-        }
-
+        public List<Manufacturer> GetAll() => ManufacturerDAO.GetAll();
+        
         public Manufacturer GetSingle(int id)
         {
             return ManufacturerDAO.GetByID(id);
@@ -58,6 +55,11 @@ namespace Katale_Server_Final.Service.Implementation
             ManufacturerDAO.Update(manufacturer);
 
             return ManufacturerDAO.GetByID(manufacturer.ID);
+        }
+
+        public bool Exists(Manufacturer t)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -59,5 +59,10 @@ namespace Katale_Server_Final.Service.Implementation
 
             return ProductDAO.GetByID(product.ID);
         }
+
+        public bool Exists(Product product)
+        {
+            return ProductDAO.Exists(product);
+        }
     }
 }

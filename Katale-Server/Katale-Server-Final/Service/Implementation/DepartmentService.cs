@@ -70,6 +70,9 @@ namespace Katale_Server_Final.Service.Implementation
             return DepartmentDAO.GetByID(department.ID);
         }
 
-    
+        public bool Exists(Department department)
+        {
+            return DepartmentDAO.Exists(department);
+        }
     }
 }

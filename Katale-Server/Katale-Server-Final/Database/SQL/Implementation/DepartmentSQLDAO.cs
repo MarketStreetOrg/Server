@@ -1,11 +1,8 @@
-﻿using Katale_Server_.Database;
-using Katale_Server_.Models;
+﻿using Katale_Server_.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace Katale_Server_Final.Database.SQL
 {

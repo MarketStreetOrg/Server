@@ -1,5 +1,5 @@
-﻿using Katale_Server_.Database;
-using Katale_Server_Final.Database.Source;
+﻿using Katale_Server_Final.Database.Source;
+using Katale_Server_Final.Source;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -20,7 +20,7 @@ namespace Katale_Server_Final.Database
  
         public SqlDAO()
         {
-            GlobalConfigurations.Configuration = new AzureCloudConfig();
+            GlobalConfigurations.Configuration = new LocalSQLConfig();
         }
 
 

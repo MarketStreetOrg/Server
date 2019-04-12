@@ -1,21 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using Katale_Server_.Database;
+﻿using Katale_Server_Final.Database;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Katale_Server_.Models
 {
     public class Product
     {
+        [BsonElement("_id"),BsonId]
         public int ID { get; set; }
+
+        [BsonElement("name")]
         public string Name { get; set; }
+
+        [BsonElement]
         public string Description { get; set; }
+
+        [BsonElement]
         public bool PromoDept { get; set; }
+
+        [BsonElement]
         public bool PromoFront { get; set; }
+
+        [BsonElement]
         public bool InStock { get; set; }
+
+        [BsonElement]
         public Category Category { get; set; }
+
+        [BsonElement]
         public int ManufacturerID { get; set; }
 
         Engine.Categories categories = new Engine.Categories();

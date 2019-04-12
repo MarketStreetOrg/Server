@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Web;
-using Katale_Server_.Database;
+using Katale_Server_Final.Database;
 using Katale_Server_Final.Utilities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Katale_Server_.Models
 {
-    
+ 
     [Entity(name:"departments")]
     public class Department
     {

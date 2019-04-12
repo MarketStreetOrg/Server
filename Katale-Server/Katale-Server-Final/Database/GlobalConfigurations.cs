@@ -1,8 +1,8 @@
 using Katale_Server_Final.Database.Source;
 
-namespace Katale_Server_.Database
+namespace Katale_Server_Final.Database
 {
-    public class GlobalConfigurations
+    public static class GlobalConfigurations
     {
 
         public static IConfig Configuration { get; set; }

@@ -11,7 +11,7 @@ using Katale_Server_Final.Side_Code;
 using System.IO;
 
 
-namespace Katale_Server_.Database
+namespace Katale_Server_Final.Database
 {
     public class Engine
     {
@@ -294,7 +294,7 @@ namespace Katale_Server_.Database
                                 Name = dataRow[1].ToString(),
                                 Description = dataRow[2].ToString(),
                                 Department = new Departments().Get(Convert.ToInt32(dataRow[3].ToString())),
-                                Products = Convert.ToInt32(dataRow[5])
+                                ProductCount = Convert.ToInt32(dataRow[5])
 
                             };
 
@@ -343,7 +343,7 @@ namespace Katale_Server_.Database
                             Name = dt.Rows[0][1].ToString(),
                             Description = dt.Rows[0][2].ToString(),
                             Department = new Departments().Get(Convert.ToInt32(dt.Rows[0][3].ToString())),
-                            Products = Convert.ToInt32(dt.Rows[0][5])
+                            ProductCount = Convert.ToInt32(dt.Rows[0][5])
 
                         };
 
@@ -389,7 +389,7 @@ namespace Katale_Server_.Database
                             Name = dt.Rows[0][1].ToString(),
                             Description = dt.Rows[0][2].ToString(),
                             Department = new Departments().Get(Convert.ToInt32(dt.Rows[0][3].ToString())),
-                            Products = Convert.ToInt32(dt.Rows[0][5])
+                            ProductCount = Convert.ToInt32(dt.Rows[0][5])
 
                         };
 
@@ -437,7 +437,7 @@ namespace Katale_Server_.Database
                                 Name = dataRow[1].ToString(),
                                 Description = dataRow[2].ToString(),
                                 Department = new Departments().Get(Convert.ToInt32(dataRow[3].ToString())),
-                                Products = Convert.ToInt32(dataRow[5])
+                                ProductCount = Convert.ToInt32(dataRow[5])
 
                             };
 
@@ -545,7 +545,7 @@ namespace Katale_Server_.Database
         public class Products
         {
             /// <summary>
-            /// Selecting Products from Database
+            /// Selecting ProductCount from Database
             /// </summary>
             public List<Product> Get()
             {

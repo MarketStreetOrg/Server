@@ -18,6 +18,7 @@ namespace Katale_Server_Final.Utilities.Messaging.implementation
             channel.ExchangeDeclare(Exchange, ExchangeType.Topic);
             channel.QueueDeclare(Queue, false, false, false, null);
             channel.QueueBind(Queue, Exchange, RoutingKey, null);
+            base.Queue = Queue;
 
         }
 
@@ -33,7 +34,7 @@ namespace Katale_Server_Final.Utilities.Messaging.implementation
         public void ReceiveAsync()
         {
             var consumer = new EventingBasicConsumer(channel);
-
+           
             consumer.Received += (sender, args) =>
             {
                 channel.BasicAck(args.DeliveryTag, false);
@@ -42,7 +43,7 @@ namespace Katale_Server_Final.Utilities.Messaging.implementation
 
             };
 
-            channel.BasicConsume(Queue, false, consumer);
+           channel.BasicConsume(Queue,false, consumer);
 
         }
 

@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Katale_Server_Final</RootNamespace>
     <AssemblyName>Katale-Server-Final</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
@@ -96,6 +96,12 @@
     <Reference Include="MongoDB.Driver.Core, Version=2.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Driver.Core.2.8.0\lib\net452\MongoDB.Driver.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Neo4j.Driver, Version=1.7.180.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Neo4j.Driver.1.7.1\lib\net452\Neo4j.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PostSharp, Version=6.1.15.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.Redist.6.1.15\lib\net45\PostSharp.dll</HintPath>
     </Reference>
@@ -167,9 +173,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -188,14 +191,20 @@
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Database\Engine.cs" />
     <Compile Include="Database\Mongo\IMongoDAO.cs" />
     <Compile Include="Database\Mongo\Implementation\CategoryMongoDAO.cs" />
+    <Compile Include="Database\Mongo\Implementation\ProductMongoDAO.cs" />
     <Compile Include="Database\Mongo\Implementation\DepartmentMongoDAO.cs" />
+    <Compile Include="Database\Neo4j\Implementation\CategoryGraphDAO.cs" />
+    <Compile Include="Database\Neo4j\INeo4jDAO.cs" />
+    <Compile Include="Database\Neo4j\Neo4jDAO.cs" />
     <Compile Include="Database\Source\AzureCloudConfig.cs" />
     <Compile Include="Database\Source\AzureCloudVaultConfig.cs" />
     <Compile Include="Database\Source\IConfig.cs" />
     <Compile Include="Database\Generic\IGenericDAO.cs" />
     <Compile Include="Database\Source\LocalMongoDBConfig.cs" />
+    <Compile Include="Database\Source\LocalNeo4jConfig.cs" />
     <Compile Include="Database\Source\LocalSQLConfig.cs" />
     <Compile Include="Database\SQL\Implementation\CategorySqlDAO.cs" />
     <Compile Include="Database\SQL\Implementation\ManufacturerSqlDAO.cs" />
@@ -215,7 +224,6 @@
     <Compile Include="Database\SQL\IsqlDAO.cs" />
     <Compile Include="Database\Mongo\MongoDAO.cs" />
     <Compile Include="Service\Implementation\DepartmentService.cs" />
-    <Compile Include="Database\Engine.cs" />
     <Compile Include="Database\GlobalConfigurations.cs" />
     <Compile Include="Database\SQL\SqlDAO.cs" />
     <Compile Include="Global.asax.cs">
@@ -232,6 +240,7 @@
     <Compile Include="Utilities\AOP\LoggingAspect.cs" />
     <Compile Include="Utilities\Column.cs" />
     <Compile Include="Utilities\Entity.cs" />
+    <Compile Include="Utilities\Exceptions\RecordExistsException.cs" />
     <Compile Include="Utilities\IniFile.cs" />
     <Compile Include="Utilities\Messaging\implementation\DirectRabbitMQProducer.cs" />
     <Compile Include="Utilities\Messaging\implementation\TopicRabbitMQConsumer.cs" />

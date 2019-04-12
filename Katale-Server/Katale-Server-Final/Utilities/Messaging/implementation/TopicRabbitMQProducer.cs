@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,7 @@ namespace Katale_Server_Final.Utilities.Messaging.implementation
             model.QueueBind(Queue, Exchange, Routingkey, null);
 
             JObject jsonObject = JObject.FromObject(obj);
+           
 
             byte[] message = System.Text.Encoding.UTF8.GetBytes(jsonObject.ToString());
 
